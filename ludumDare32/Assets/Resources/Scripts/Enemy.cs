@@ -16,13 +16,13 @@ public class Enemy : CharacterBase
 		bool objectToSeek = false;
 		if(!hasItem)
 		{
-			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("Item")));
+			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("CollideItem")));
 			if(sortedItems.Count > 0)
 			{
 				Collider2D item = null;
 				do 
 				{
-					item = sortedItems[0];
+					item = sortedItems.Values[0];
 					sortedItems.RemoveAt(0);
 				} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
 
@@ -38,9 +38,10 @@ public class Enemy : CharacterBase
 			SortedList<float,Collider2D> sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, throwRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
 			if(sortedEnemies.Count > 0)
 			{
-				Collider2D enemy = sortedEnemies[0];
+				Collider2D enemy = sortedEnemies.Values[0];
 
-				item.GetComponent<ObjectBase>().Fire((enemy.transform.position - transform.position));
+				item.GetComponent<ObjectBase>().Fire(enemy.transform.position);
+				hasItem = false;
 			}
 			else
 			{
@@ -48,7 +49,7 @@ public class Enemy : CharacterBase
 				if(sortedEnemies.Count > 0)
 				{
 					objectToSeek = true;
-					Collider2D enemy = sortedEnemies[0];
+					Collider2D enemy = sortedEnemies.Values[0];
 
 					SetMoveVec(enemy.transform);
 				}
@@ -76,7 +77,13 @@ public class Enemy : CharacterBase
 		{
 			foreach(Collider2D c in colliders)
 			{
-				objectColliders.Add((c.transform.position - transform.position).magnitude, c);
+				if(c.gameObject.Equals(gameObject))
+					continue;
+				float mag = (c.transform.position - transform.position).magnitude;
+				if(!objectColliders.ContainsKey(mag))
+				{
+					objectColliders.Add(mag, c);
+				}
 			}
 		}
 		return objectColliders;
@@ -110,10 +117,12 @@ public class Enemy : CharacterBase
 	{
 		if(col.CompareTag("Item") && !hasItem)
 		{
-			ObjectBase item = col.GetComponent<ObjectBase>();
-			if(maxWeight >= item.weight)
+			ObjectBase obj = col.GetComponent<ObjectBase>();
+			if(maxWeight >= obj.weight)
 			{
-				//pick up item
+				obj.Picked_up(gameObject);
+				item = obj.gameObject;
+				hasItem = true;
 			}
 		}
 	}

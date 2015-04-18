@@ -38,7 +38,6 @@ public class ObjectBase : MonoBehaviour {
 	}
 
 	public void Fire(Vector3 mouse_pos){
-		Debug.Log (mouse_pos);
 		target = mouse_pos - transform.position;
 	}	
 }
