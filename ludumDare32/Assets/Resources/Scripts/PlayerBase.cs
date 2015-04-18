@@ -11,7 +11,7 @@ public class PlayerBase : CharacterBase
 	{
 		maxHealth = 100;
 		health = maxHealth;
-		moveSpeed = 10;
+		moveSpeed = 5;
 	}
 	
 	// Update is called once per frame
@@ -33,10 +33,10 @@ public class PlayerBase : CharacterBase
 			}
 		}
 
-		float xSpeed = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-		float ySpeed = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
-		moveVec = new Vector3 (xSpeed, ySpeed, 0.0f);
-		transform.position += moveVec;
+		float xSpeed = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
+		float ySpeed = Input.GetAxisRaw ("Vertical") * moveSpeed * Time.deltaTime;
+		moveVec = new Vector2 (xSpeed, ySpeed);
+		transform.Translate(moveVec);
 
 	}
 
