@@ -33,12 +33,12 @@ public class CharacterBase : MonoBehaviour
 
 	}
 
-	void addItem(GameObject c)
+	public void addItem(GameObject c)
 	{
 		gameObjects.Add (c);
 	}
 
-	void removeItem(GameObject c)
+	public void removeItem(GameObject c)
 	{
 		gameObjects.Remove(c);
 	}
@@ -83,7 +83,7 @@ public class CharacterBase : MonoBehaviour
 		}
 		item = closest;
 		hasItem = true;
-		item.SendMessage ("Picked_up", transform.position);
+		item.SendMessage ("Picked_up", transform);
 	}
 
 }
