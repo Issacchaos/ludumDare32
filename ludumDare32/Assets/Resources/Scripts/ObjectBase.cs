@@ -7,7 +7,7 @@ public class ObjectBase : MonoBehaviour {
 	public int size_x; //image
 	public int size_y; //image
 	public bool picked_up = false;
-	public bool thrown;
+	public bool thrown = false;
 
 	private GameObject pivot;
 	private Vector3 target = Vector3.zero;
@@ -42,7 +42,7 @@ public class ObjectBase : MonoBehaviour {
 
 	public void Fire(Vector3 mouse_pos, float throw_speed){
 		target = mouse_pos - transform.position;
-
+		thrown = true;
 		speed = throw_speed;
 	}	
 }

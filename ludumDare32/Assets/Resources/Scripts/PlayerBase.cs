@@ -29,12 +29,12 @@ public class PlayerBase : CharacterBase
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		for(int i=1;i<=10;i++)
-		{
-			Debug.Log(levelSys[i][0]); 
-			Debug.Log (levelSys[i][1]);
-			Debug.Log (levelSys[i][2]);
-		}
+//		for(int i=1;i<=10;i++)
+//		{
+//			Debug.Log(levelSys[i][0]); 
+//			Debug.Log (levelSys[i][1]);
+//			Debug.Log (levelSys[i][2]);
+//		}
 		if(Input.GetMouseButtonDown(0))
 		{
 			if(hasItem)
