@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerBase : CharacterBase 
 {
@@ -9,11 +10,31 @@ public class PlayerBase : CharacterBase
 		maxHealth = 100;
 		health = maxHealth;
 		moveSpeed = 1.8f;
+		base.Start ();
+//
+//		levelSys = new Dictionary<int,List<int>> ();
+//		
+//		for(int i=1;i<=10;i++)
+//		{
+//			// a list in the order of maxWeight, max exp, max health
+//			List<int> tmp = new List<int>();
+//			tmp.Add(1 + (5 * i));
+//			tmp.Add(100 + (50 * i));
+//			tmp.Add(100 + (20 * i));
+//			levelSys.Add (i,tmp);
+//		}
+
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
+		for(int i=1;i<=10;i++)
+		{
+			Debug.Log(levelSys[i][0]); 
+			Debug.Log (levelSys[i][1]);
+			Debug.Log (levelSys[i][2]);
+		}
 		if(Input.GetMouseButtonDown(0))
 		{
 			if(hasItem)

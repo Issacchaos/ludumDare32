@@ -14,20 +14,35 @@ public class CharacterBase : MonoBehaviour
 	public int exp = 0;
 	public int maxExp;
 	public float max_throw_speed = 5.0f;
+	public int maxLevel = 10;
 
 	public bool hasItem = false;
 	public bool dead = false;
 
 	public GameObject item;
 	public List<GameObject> gameObjects;
+	public Dictionary<int,List<int>> levelSys;
 
 	protected Vector3 moveVec = Vector3.zero;
 
 
 	// Use this for initialization
-	void Start () 
+	protected void Start () 
 	{
 		gameObjects = new List<GameObject> ();
+		levelSys = new Dictionary<int,List<int>> ();
+
+		for(int i=1;i<=10;i++)
+		{
+			// a list in the order of maxWeight, max exp, max health
+			List<int> tmp = new List<int>();
+			tmp.Add(1 + (5 * i));
+			tmp.Add(100 + (50 * i));
+			tmp.Add(100 + (20 * i));
+			levelSys.Add (i,tmp);
+		}
+
+
 	}
 	
 	// Update is called once per frame
@@ -59,7 +74,21 @@ public class CharacterBase : MonoBehaviour
 	{
 		if((exp + val) >= maxExp)
 		{
-			level += 1;
+			if(level < maxLevel)
+			{
+				level += 1;
+				maxWeight = levelSys[level][0];
+				maxExp = levelSys[level][1];
+				int tmp = maxHealth;
+				maxHealth = levelSys[level][2];
+				if(health == tmp)
+	             {
+					health = maxHealth;
+	             }
+			}
+
+
+
 		}
 	}
 
@@ -84,10 +113,14 @@ public class CharacterBase : MonoBehaviour
 				}
 			}
 		}
-		item = closest;
-		hasItem = true;
-		item.SendMessage ("Picked_up", gameObject);
-		item.GetComponent<BoxCollider2D> ().isTrigger = true;
+		if(item)
+		{
+			item = closest;
+			hasItem = true;
+			item.SendMessage ("Picked_up", gameObject);
+			item.GetComponent<BoxCollider2D> ().isTrigger = true;
+		}
+		
 	}
 
 }
