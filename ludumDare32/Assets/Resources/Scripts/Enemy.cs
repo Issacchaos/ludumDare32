@@ -76,12 +76,9 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-<<<<<<< HEAD
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			//pick up item
 		}
-=======
->>>>>>> origin/master
 	}
 }
