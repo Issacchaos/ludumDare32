@@ -118,11 +118,26 @@ public class Enemy : CharacterBase
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			ObjectBase obj = col.GetComponent<ObjectBase>();
-			if(maxWeight >= obj.weight)
+			if(maxWeight > obj.weight)
 			{
-				obj.Picked_up(gameObject);
-				item = obj.gameObject;
-				hasItem = true;
+				if(obj.thrown)
+				{
+					print ("we got in here");
+					int tmp = Random.Range (1,10);
+					if(tmp == 1 || tmp == 2)
+					{
+						obj.Picked_up(gameObject);
+						item = obj.gameObject;
+						hasItem = true;
+					}
+				}
+				else
+				{
+					obj.Picked_up(gameObject);
+					item = obj.gameObject;
+					hasItem = true;
+				}
+
 			}
 		}
 	}

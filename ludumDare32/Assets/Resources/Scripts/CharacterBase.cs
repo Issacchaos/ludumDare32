@@ -70,7 +70,7 @@ public class CharacterBase : MonoBehaviour
 		for(int i=0;i<gameObjects.Count;i++)
 		{
 			ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
-			if(scr.weight > maxWeight)
+			if(scr.weight >= maxWeight)
 			{
 				continue;
 			}
@@ -87,6 +87,7 @@ public class CharacterBase : MonoBehaviour
 		item = closest;
 		hasItem = true;
 		item.SendMessage ("Picked_up", gameObject);
+		item.GetComponent<BoxCollider2D> ().isTrigger = true;
 	}
 
 }
