@@ -99,6 +99,9 @@ public class PlayerBase : CharacterBase
 	{
 		if(c.CompareTag("Item"))
 		{
+			if (!hasItem)
+				c.SendMessage("change_sprite", "enter");
+
 			if(!gameObjects.Contains(c.gameObject))
 			{
 				addItem(c.gameObject);
@@ -109,7 +112,10 @@ public class PlayerBase : CharacterBase
 	void OnTriggerExit2D(Collider2D c)
 	{
 		if(c.CompareTag("Item"))
-		{	if(gameObjects.Contains(c.gameObject))
+		{	
+			c.SendMessage("change_sprite", "leave");
+
+			if(gameObjects.Contains(c.gameObject))
 			{
 				removeItem(c.gameObject);
 			}
