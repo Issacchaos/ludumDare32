@@ -170,6 +170,11 @@ public class Enemy : CharacterBase
 			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
 			if(obj.who_threw != gameObject)
 			{
+				if(c.gameObject.name == "Item_Bottle_Green")
+				{
+					Debug.Log("so far so good");
+					c.gameObject.BroadcastMessage("HitAPlayer", "Item_Bottle_Green");
+				}
 				if(obj.thrown)
 					Killed();
 			}

@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HealthBar.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\ObjectBase.cs">
     <Files>
-      <File FileName="Assets\HealthBar.cs" Line="25" Column="2" />
+      <File FileName="Assets\Resources\Scripts\Enemy.cs" Line="176" Column="69" />
+      <File FileName="Assets\Resources\Scripts\ObjectBase.cs" Line="63" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -9,6 +9,7 @@ public class ObjectBase : MonoBehaviour {
 	public bool picked_up = false;
 	public bool thrown = false;
 	public GameObject who_threw;
+	public AudioSource myAudio;
 
 	private GameObject pivot;
 	public Vector3 target = Vector3.zero;
@@ -53,7 +54,14 @@ public class ObjectBase : MonoBehaviour {
 		target = mouse_pos - transform.position;
 		thrown = true;
 		speed = throw_speed;
-	}	
+	}
+
+	public void HitAPlayer(string itemType){
+		if (itemType == "Item_Bottle_Green")
+			myAudio = gameObject.GetComponent<AudioSource> ();
+			myAudio.Play();
+
+	}
 
 
 }
