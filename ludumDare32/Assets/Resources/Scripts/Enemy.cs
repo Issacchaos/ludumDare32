@@ -87,6 +87,7 @@ public class Enemy : CharacterBase
 	public IEnumerator Wander()
 	{
 		wandering = true;
+
 		yield return new WaitForSeconds(5f);
 		wandering = false;
 	}
