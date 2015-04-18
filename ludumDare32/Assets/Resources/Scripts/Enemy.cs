@@ -29,7 +29,7 @@ public class Enemy : CharacterBase
 						sortedItems.RemoveAt(0);
 					} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
 					
-					if(item != null)
+					if(item != null && item.GetComponent<ObjectBase>().thrown != true)
 					{
 						objectToSeek = true;
 						SetMoveVec(item.transform);
@@ -44,6 +44,8 @@ public class Enemy : CharacterBase
 					Collider2D enemy = sortedEnemies.Values[0];
 					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
 					item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
+					item.GetComponent<BoxCollider2D>().isTrigger = false;
+					item.GetComponent<Rigidbody2D>().isKinematic = false;
 					hasItem = false;
 				}
 				else
@@ -120,6 +122,7 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		Debug.Log ("adfsdafd");
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			ObjectBase obj = col.GetComponent<ObjectBase>();
@@ -145,5 +148,16 @@ public class Enemy : CharacterBase
 
 			}
 		}
+	}
+
+	void OnCollisionEnter2D (Collision2D c)
+	{
+		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase>().who_threw != gameObject) {
+			if(c.gameObject.GetComponent<ObjectBase>().thrown){
+				Destroy(gameObject);
+			}
+		}
+
+
 	}
 }
