@@ -43,9 +43,7 @@ public class Enemy : CharacterBase
 				{
 					Collider2D enemy = sortedEnemies.Values[0];
 					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
-					float angle = Random.Range(-10f, 10f);
-					Vector3 tVec = Quaternion.AngleAxis(angle, Vector3.forward) * (enemy.transform.position - transform.position);
-					item.GetComponent<ObjectBase>().Fire(tVec, throw_speed);
+					item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
 					item.GetComponent<BoxCollider2D>().isTrigger = false;
 					item.GetComponent<Rigidbody2D>().isKinematic = false;
 					hasItem = false;
@@ -141,29 +139,26 @@ public class Enemy : CharacterBase
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			ObjectBase obj = col.GetComponent<ObjectBase>();
-			if(obj != null)
+			if(maxWeight > obj.weight)
 			{
-				if(maxWeight > obj.weight)
+				if(obj.thrown)
 				{
-					if(obj.thrown)
-					{
-						print ("we got in here");
-						int tmp = Random.Range (1,10);
-						if(tmp == 1 || tmp == 2)
-						{
-							obj.Picked_up(gameObject);
-							item = obj.gameObject;
-							hasItem = true;
-						}
-					}
-					else
+					print ("we got in here");
+					int tmp = Random.Range (1,10);
+					if(tmp == 1 || tmp == 2)
 					{
 						obj.Picked_up(gameObject);
 						item = obj.gameObject;
 						hasItem = true;
 					}
-
 				}
+				else
+				{
+					obj.Picked_up(gameObject);
+					item = obj.gameObject;
+					hasItem = true;
+				}
+
 			}
 		}
 	}
