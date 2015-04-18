@@ -96,7 +96,9 @@ public class CharacterBase : MonoBehaviour
 	public void pick_up()
 	{
 		float tmpDist = 0.0f;
+		float tmpDist2 = 0.0f;
 		GameObject closest = null;
+		GameObject thrownClosest = null;
 		for(int i=0;i<gameObjects.Count;i++)
 		{
 			ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
@@ -107,6 +109,14 @@ public class CharacterBase : MonoBehaviour
 			else
 			{
 				float tmp = Vector3.Distance(transform.position,gameObjects[i].transform.position);
+				if(scr.weight <= (maxWeight/2) && scr.thrown)
+				{
+					if(tmp < tmpDist2 || tmpDist2 == 0.0f)
+					{
+						tmpDist2 = tmp;
+						thrownClosest = gameObjects[i];
+					}
+				}
 				if(tmp < tmpDist || tmpDist == 0.0f)
 				{
 					closest = gameObjects[i];
@@ -114,10 +124,17 @@ public class CharacterBase : MonoBehaviour
 				}
 			}
 		}
-
-		Debug.Log (closest);
-
-		if(closest)
+		
+		if(thrownClosest)
+		{
+			item = thrownClosest;
+			curWeight = thrownClosest.GetComponent<ObjectBase>().weight;
+			hasItem = true;
+			item.SendMessage ("Picked_up", gameObject);
+			item.GetComponent<BoxCollider2D> ().isTrigger = true;
+			item.GetComponent<Rigidbody2D> ().isKinematic = true;
+		}
+		else if(closest)
 		{
 			item = closest;
 			curWeight = closest.GetComponent<ObjectBase>().weight;
