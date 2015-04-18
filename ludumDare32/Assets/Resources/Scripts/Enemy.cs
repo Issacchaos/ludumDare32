@@ -158,6 +158,16 @@ public class Enemy : CharacterBase
 			}
 		}
 
+		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase> ().who_threw == gameObject) {
+			c.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+		}
+
+	}
+
+	void OnTriggerExit2D(Collider2D c){
+		if (c.gameObject.CompareTag ("Item")) {
+			c.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+		}
 
 	}
 }
