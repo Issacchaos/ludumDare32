@@ -8,6 +8,7 @@ public class ObjectBase : MonoBehaviour {
 	public int size_y; //image
 	public bool picked_up = false;
 	public bool thrown = false;
+	public GameObject who_threw;
 
 	private GameObject pivot;
 	private Vector3 target = Vector3.zero;
@@ -41,6 +42,7 @@ public class ObjectBase : MonoBehaviour {
 	}
 
 	public void Picked_up(GameObject pos){
+		who_threw = pos;
 		transform.position = new Vector3(pos.transform.position.x + 0.15f + size_x/2, pos.transform.position.y, pos.transform.position.z);
 		pivot = pos;
 
