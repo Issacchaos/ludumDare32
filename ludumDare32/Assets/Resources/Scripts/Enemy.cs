@@ -10,64 +10,69 @@ public class Enemy : CharacterBase
 	public float maxSeekRange = 0f;
 	public int baseExpWorth = 100;
 	public bool wandering = false;
+	public bool active = true;
 
 	void FixedUpdate()
 	{
-		bool objectToSeek = false;
-		if(!hasItem)
+		if(active)
 		{
-			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("CollideItem")));
-			if(sortedItems.Count > 0)
+			bool objectToSeek = false;
+			if(!hasItem)
 			{
-				Collider2D item = null;
-				do 
+				SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("CollideItem")));
+				if(sortedItems.Count > 0)
 				{
-					item = sortedItems.Values[0];
-					sortedItems.RemoveAt(0);
-				} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
-
-				if(item != null)
-				{
-					objectToSeek = true;
-					SetMoveVec(item.transform);
+					Collider2D item = null;
+					do 
+					{
+						item = sortedItems.Values[0];
+						sortedItems.RemoveAt(0);
+					} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
+					
+					if(item != null)
+					{
+						objectToSeek = true;
+						SetMoveVec(item.transform);
+					}
 				}
-			}
-		}
-		else
-		{
-			SortedList<float,Collider2D> sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, throwRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
-			if(sortedEnemies.Count > 0)
-			{
-				Collider2D enemy = sortedEnemies.Values[0];
-				float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
-				item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
-				hasItem = false;
 			}
 			else
 			{
-				sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
+				SortedList<float,Collider2D> sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, throwRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
 				if(sortedEnemies.Count > 0)
 				{
-					objectToSeek = true;
 					Collider2D enemy = sortedEnemies.Values[0];
-
-					SetMoveVec(enemy.transform);
+					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
+					item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
+					hasItem = false;
+				}
+				else
+				{
+					sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
+					if(sortedEnemies.Count > 0)
+					{
+						objectToSeek = true;
+						Collider2D enemy = sortedEnemies.Values[0];
+						
+						SetMoveVec(enemy.transform);
+					}
 				}
 			}
-		}
-		if(!objectToSeek)
-		{
-			if(!wandering)
+			if(!objectToSeek)
 			{
-				StartCoroutine("Wander");
+				if(!wandering)
+				{
+					StartCoroutine("Wander");
+				}
 			}
-		}
-		else
-		{
-			StopWandering();
+			else
+			{
+				StopWandering();
+			}
+			
+			transform.Translate(moveVec * Time.deltaTime);
 		}
 
-		transform.Translate(moveVec * Time.deltaTime);
 	}
 
 	public SortedList<float,Collider2D> FindClosestObject(Collider2D[] colliders)
