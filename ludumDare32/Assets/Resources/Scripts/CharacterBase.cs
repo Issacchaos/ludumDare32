@@ -67,6 +67,7 @@ public class CharacterBase : MonoBehaviour
 	{
 		float tmpDist = 0.0f;
 		GameObject closest = null;
+		Debug.Log (gameObjects[0]);
 		for(int i=0;i<gameObjects.Count;i++)
 		{
 			ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
@@ -86,8 +87,10 @@ public class CharacterBase : MonoBehaviour
 		}
 		item = closest;
 		hasItem = true;
+		Debug.Log (item);
 		item.SendMessage ("Picked_up", gameObject);
 		item.GetComponent<BoxCollider2D> ().isTrigger = true;
+		item.GetComponent<Rigidbody2D> ().isKinematic = true;
 	}
 
 }
