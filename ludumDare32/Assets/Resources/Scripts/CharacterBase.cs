@@ -30,30 +30,7 @@ public class CharacterBase : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(gameObjects.Count > 0 && !hasItem)
-		{
-			float tmpDist = 0.0f;
-			GameObject closest = null;
-			for(int i=0;i<gameObjects.Count;i++)
-			{
-				ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
-				if(scr.weight > maxWeight)
-				{
-					continue;
-				}
-				else
-				{
-					float tmp = Vector3.Distance(transform.position,gameObjects[i].transform.position);
-					if(tmp < tmpDist || tmpDist == 0.0f)
-					{
-						closest = gameObjects[i];
-						tmpDist = tmp;
-					}
-				}
-			}
-			item = closest;
-			hasItem = true;
-		}
+
 	}
 
 	void addItem(GameObject c)
@@ -81,6 +58,32 @@ public class CharacterBase : MonoBehaviour
 		{
 			level += 1;
 		}
+	}
+
+	public void pick_up()
+	{
+		float tmpDist = 0.0f;
+		GameObject closest = null;
+		for(int i=0;i<gameObjects.Count;i++)
+		{
+			ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
+			if(scr.weight > maxWeight)
+			{
+				continue;
+			}
+			else
+			{
+				float tmp = Vector3.Distance(transform.position,gameObjects[i].transform.position);
+				if(tmp < tmpDist || tmpDist == 0.0f)
+				{
+					closest = gameObjects[i];
+					tmpDist = tmp;
+				}
+			}
+		}
+		item = closest;
+		hasItem = true;
+		item.SendMessage ("Picked_up", transform.position);
 	}
 
 }

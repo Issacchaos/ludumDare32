@@ -17,7 +17,10 @@ public class PlayerBase : CharacterBase
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-
+		if(gameObjects.Count > 0 && !hasItem && Input.GetMouseButtonDown(0))
+		{
+			pick_up ();
+		}
 
 		float xSpeed = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
 		float ySpeed = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
@@ -25,4 +28,5 @@ public class PlayerBase : CharacterBase
 		transform.position += moveVec;
 
 	}
+
 }
