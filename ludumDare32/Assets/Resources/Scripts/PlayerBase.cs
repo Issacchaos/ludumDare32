@@ -66,15 +66,20 @@ public class PlayerBase : CharacterBase
 	{
 		if(c.CompareTag("Item"))
 		{
-			addItem(c.gameObject);
+			if(!gameObjects.Contains(c.gameObject))
+			{
+				addItem(c.gameObject);
+			}
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D c)
 	{
 		if(c.CompareTag("Item"))
-		{
-			removeItem(c.gameObject);
+		{	if(gameObjects.Contains(c.gameObject))
+			{
+				removeItem(c.gameObject);
+			}
 		}
 	}
 

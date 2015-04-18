@@ -11,7 +11,7 @@ public class ObjectBase : MonoBehaviour {
 	public GameObject who_threw;
 
 	private GameObject pivot;
-	private Vector3 target = Vector3.zero;
+	public Vector3 target = Vector3.zero;
 	private float speed;
 	private string id;
 

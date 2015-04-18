@@ -129,6 +129,7 @@ public class CharacterBase : MonoBehaviour
 		{
 			item = thrownClosest;
 			curWeight = thrownClosest.GetComponent<ObjectBase>().weight;
+			thrownClosest.GetComponent<ObjectBase>().target = Vector3.zero;
 			hasItem = true;
 			item.SendMessage ("Picked_up", gameObject);
 			item.GetComponent<BoxCollider2D> ().isTrigger = true;
