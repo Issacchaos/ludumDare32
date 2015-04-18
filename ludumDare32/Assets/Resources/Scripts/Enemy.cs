@@ -76,19 +76,9 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if(hasItem)
+		if(col.CompareTag("Item") && !hasItem)
 		{
-			if(col.CompareTag("Player") || col.CompareTag("Enemy"))
-			{
-				//attack enemy
-			}
-		}
-		else
-		{
-			if(col.CompareTag("Item"))
-			{
-				//pick up item
-			}
+			//pick up item
 		}
 	}
 }
