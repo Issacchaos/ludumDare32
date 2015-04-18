@@ -9,7 +9,7 @@ public class ObjectBase : MonoBehaviour {
 	public bool picked_up = false;
 
 	private Transform pivot;
-	private Vector3 target = null;
+	private Vector3 target = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +24,7 @@ public class ObjectBase : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if (target != null) {
+		if (target != Vector3.zero) {
 			transform.Translate(target * Time.deltaTime);
 		}
 	}
