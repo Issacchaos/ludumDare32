@@ -3,10 +3,10 @@ using System.Collections;
 
 public class HealthPotion : MonoBehaviour {
 	
-	private int amount = 50;
+	private int ammount = 50;
 
 	public void OnTriggerEnter2D(Collider2D col){
-		if(col.CompareTag("Player") || col.CompareTag("Enemy")) {
+		if (col.Equals == GameObject.FindGameObjectWithTag ("Player") || col.Equals == GameObject.FindGameObjectWithTag ("Enemy")) {
 			heal(col.gameObject);
 		}
 
@@ -16,7 +16,7 @@ public class HealthPotion : MonoBehaviour {
 	public void heal(GameObject p)
 	{
 		CharacterBase c = p.GetComponent<CharacterBase>();
-		c.health += amount;
+		c.health += ammount;
 		c.health = Mathf.Clamp (c.health, 0, c.maxHealth);
 		Destroy (this);
 	}
