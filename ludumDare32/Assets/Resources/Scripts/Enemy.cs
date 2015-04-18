@@ -120,6 +120,18 @@ public class Enemy : CharacterBase
 		wandering = false;
 	}
 
+	public void Killed()
+	{
+		dead = true;
+		enabled = false;
+		if(item != null)
+			item.GetComponent<ObjectBase>().picked_up = false;
+
+		GetComponent<ObjectBase>().enabled = true;
+		gameObject.layer = LayerMask.NameToLayer("CollideItem");
+		tag = "Item";
+	}
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		Debug.Log ("adfsdafd");
@@ -154,7 +166,8 @@ public class Enemy : CharacterBase
 	{
 		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase>().who_threw != gameObject) {
 			if(c.gameObject.GetComponent<ObjectBase>().thrown){
-				Destroy(gameObject);
+				//Destroy(gameObject);
+				Killed();
 			}
 		}
 
