@@ -5,7 +5,8 @@ ehthumbs.db
 # Folder config file
 Desktop.ini
 
-ludumDare32/Library/
+Library/
+Temp/
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
