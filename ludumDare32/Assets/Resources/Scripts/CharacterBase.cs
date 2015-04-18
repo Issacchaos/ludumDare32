@@ -7,7 +7,7 @@ public class CharacterBase : MonoBehaviour
 
 	public int health;
 	public int maxHealth;
-	public int moveSpeed;
+	public float moveSpeed;
 	public int maxWeight = 0;
 	public int curWeight = 0;
 	public int level = 1;

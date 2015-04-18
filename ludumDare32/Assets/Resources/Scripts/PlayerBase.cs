@@ -11,7 +11,7 @@ public class PlayerBase : CharacterBase
 	{
 		maxHealth = 100;
 		health = maxHealth;
-		moveSpeed = 5;
+		moveSpeed = 1.8f;
 	}
 	
 	// Update is called once per frame

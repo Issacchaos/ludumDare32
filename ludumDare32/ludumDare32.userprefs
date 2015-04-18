@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\PlayerBase.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\ObjectBase.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\CharacterBase.cs" Line="37" Column="29" />
-      <File FileName="Assets\Resources\Scripts\PlayerBase.cs" Line="32" Column="12" />
-      <File FileName="Assets\Resources\Scripts\ObjectBase.cs" Line="12" Column="1" />
+      <File FileName="Assets\Resources\Scripts\ObjectBase.cs" Line="29" Column="88" />
+      <File FileName="Assets\Resources\Scripts\CharacterBase.cs" Line="90" Column="1" />
+      <File FileName="Assets\Resources\Scripts\PlayerBase.cs" Line="14" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
