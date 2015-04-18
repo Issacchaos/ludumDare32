@@ -20,7 +20,7 @@ public class CharacterBase : MonoBehaviour
 	public GameObject item;
 	public List<GameObject> gameObjects;
 
-	private Vector3 moveVec = Vector3.zero;
+	protected Vector3 moveVec = Vector3.zero;
 
 
 	// Use this for initialization

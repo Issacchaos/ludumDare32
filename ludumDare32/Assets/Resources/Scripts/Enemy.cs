@@ -13,10 +13,6 @@ public class Enemy : CharacterBase
 
 	void FixedUpdate()
 	{
-	}
-
-	void Update()
-	{
 		bool objectToSeek = false;
 		if(!hasItem)
 		{
@@ -33,7 +29,7 @@ public class Enemy : CharacterBase
 				if(item != null)
 				{
 					objectToSeek = true;
-					MoveToObject(item.transform);
+					SetMoveVec(item.transform);
 				}
 			}
 		}
@@ -54,14 +50,23 @@ public class Enemy : CharacterBase
 					objectToSeek = true;
 					Collider2D enemy = sortedEnemies[0];
 
-					MoveToObject(enemy.transform);
+					SetMoveVec(enemy.transform);
 				}
 			}
 		}
 		if(!objectToSeek)
 		{
-			//wander
+			if(!wandering)
+			{
+				StartCoroutine("Wander");
+			}
 		}
+		else
+		{
+			StopWandering();
+		}
+
+		transform.Translate(moveVec * Time.deltaTime);
 	}
 
 	public SortedList<float,Collider2D> FindClosestObject(Collider2D[] colliders)
@@ -77,17 +82,20 @@ public class Enemy : CharacterBase
 		return objectColliders;
 	}
 
-	public void MoveToObject(Transform obj)
+	public void SetMoveVec(Transform obj)
 	{
-		Vector3 moveVec = (obj.position - transform.position).normalized;
-		moveVec *= moveSpeed * Time.deltaTime;
-		transform.position += moveVec;
+		Vector3 toObj = (obj.position - transform.position).normalized;
+		toObj *= moveSpeed;
+		moveVec = toObj;
 	}
 
 	public IEnumerator Wander()
 	{
 		wandering = true;
-
+		moveVec.x = Random.Range(-1f, 1f);
+		moveVec.y = Random.Range (-1f, 1f);
+		moveVec.Normalize();
+		moveVec *= moveSpeed;
 		yield return new WaitForSeconds(5f);
 		wandering = false;
 	}
