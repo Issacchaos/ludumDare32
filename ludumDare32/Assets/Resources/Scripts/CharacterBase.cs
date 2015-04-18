@@ -27,7 +27,7 @@ public class CharacterBase : MonoBehaviour
 
 
 	// Use this for initialization
-	protected void Start () 
+	protected virtual void Start () 
 	{
 		gameObjects = new List<GameObject> ();
 		levelSys = new Dictionary<int,List<int>> ();

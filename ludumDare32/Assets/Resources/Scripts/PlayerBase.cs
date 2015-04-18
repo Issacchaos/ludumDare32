@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerBase : CharacterBase 
 {
 	// Use this for initialization
-	void Start () 
+	protected override void Start () 
 	{
 		maxHealth = 100;
 		health = maxHealth;
