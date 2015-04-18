@@ -7,13 +7,16 @@ public class ObjectBase : MonoBehaviour {
 	public int size_x; //image
 	public int size_y; //image
 	public bool picked_up = false;
+	public bool thrown;
 
 	private GameObject pivot;
 	private Vector3 target = Vector3.zero;
+	private float speed;
 
 	// Use this for initialization
 	void Start () {
-	
+		//just in case something goes wrong
+		speed = 2.0f;
 	}
 	
 	// Update is called once per frame
@@ -26,7 +29,7 @@ public class ObjectBase : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (target != Vector3.zero) {
-			transform.position = transform.position + target.normalized * Time.deltaTime * 10.0f;
+			transform.position = transform.position + target.normalized * Time.deltaTime * speed;
 		}
 	}
 
@@ -37,7 +40,9 @@ public class ObjectBase : MonoBehaviour {
 		picked_up = true;
 	}
 
-	public void Fire(Vector3 mouse_pos){
+	public void Fire(Vector3 mouse_pos, float throw_speed){
 		target = mouse_pos - transform.position;
+
+		speed = throw_speed;
 	}	
 }

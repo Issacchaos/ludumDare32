@@ -39,8 +39,8 @@ public class Enemy : CharacterBase
 			if(sortedEnemies.Count > 0)
 			{
 				Collider2D enemy = sortedEnemies.Values[0];
-
-				item.GetComponent<ObjectBase>().Fire(enemy.transform.position);
+				float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
+				item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
 				hasItem = false;
 			}
 			else

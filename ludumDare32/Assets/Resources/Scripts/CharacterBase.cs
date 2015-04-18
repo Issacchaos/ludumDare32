@@ -8,11 +8,12 @@ public class CharacterBase : MonoBehaviour
 	public int health;
 	public int maxHealth;
 	public float moveSpeed;
-	public int maxWeight = 0;
+	public int maxWeight = 1;
 	public int curWeight = 0;
 	public int level = 1;
 	public int exp = 0;
 	public int maxExp;
+	public float max_throw_speed = 5.0f;
 
 	public bool hasItem = false;
 	public bool dead = false;
