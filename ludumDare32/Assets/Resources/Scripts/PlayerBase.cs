@@ -22,6 +22,12 @@ public class PlayerBase : CharacterBase
 			pick_up ();
 		}
 
+		if(hasItem && Input.GetMouseButtonDown(0))
+		{
+			item.SendMessage("fire",Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			hasItem = false;
+		}
+
 		float xSpeed = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
 		float ySpeed = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
 		moveVec = new Vector3 (xSpeed, ySpeed, 0.0f);
