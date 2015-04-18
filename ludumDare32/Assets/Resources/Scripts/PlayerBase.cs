@@ -33,5 +33,6 @@ public class PlayerBase : CharacterBase
 		}
 		moveVec.Normalize();
 		transform.position += (moveVec * moveSpeed * Time.deltaTime);
+		moveVec = Vector3.zero;
 	}
 }

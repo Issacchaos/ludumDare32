@@ -25,7 +25,7 @@ public class CharacterBase : MonoBehaviour
 	void Start () 
 	{
 		gameObjects = new List<GameObject> ();
-		health = maxHealth
+		health = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -34,21 +34,21 @@ public class CharacterBase : MonoBehaviour
 		if(gameObjects.Count > 0 && !hasItem)
 		{
 			float tmpDist = 0.0f;
-			GameObject closest;
+			GameObject closest = null;
 			for(int i=0;i<gameObjects.Count;i++)
 			{
 				ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
 				if(scr.weight > maxWeight)
 				{
-					continue
+					continue;
 				}
 				else
 				{
-					float tmp = Vector3.Distance(transform.position,gameObjects[i].transform.position)
+					float tmp = Vector3.Distance(transform.position,gameObjects[i].transform.position);
 					if(tmp < tmpDist || tmpDist == 0.0f)
 					{
-						closest = gameObjects[i]
-						tmpDist = tmp
+						closest = gameObjects[i];
+						tmpDist = tmp;
 					}
 				}
 			}
@@ -64,7 +64,7 @@ public class CharacterBase : MonoBehaviour
 
 	void removeItem(GameObject c)
 	{
-		gameObjects.remove(c);
+		gameObjects.Remove(c);
 	}
 
 	void takeDamage(int dmg)
@@ -73,7 +73,7 @@ public class CharacterBase : MonoBehaviour
 		{
 			dead = true;
 		}
-		health -= dmg
+		health -= dmg;
 	}
 
 }
