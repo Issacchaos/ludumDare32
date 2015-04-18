@@ -115,7 +115,7 @@ public class CharacterBase : MonoBehaviour
 			}
 		}
 
-		if(item)
+		if(closest)
 		{
 			item = closest;
 			hasItem = true;
