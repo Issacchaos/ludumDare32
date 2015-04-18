@@ -8,8 +8,8 @@ public class Enemy : CharacterBase
 	public float damage = 0f;
 	public float throwRange = 0f;
 	public float pickUpRange = 0f;
-
 	public int baseExpWorth = 100;
+	public float maxSeekRange = 0f;
 
 	void FixedUpdate()
 	{
@@ -17,10 +17,28 @@ public class Enemy : CharacterBase
 
 	void Update()
 	{
-		if(!hasItem)
+		if(hasItem)
 		{
-			bool itemToPickup = true;
-			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, pickUpRange, LayerMask.GetMask("Item")));
+			//move to enemy
+			SortedList<float,Collider2D> sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, throwRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
+			Collider2D enemy = null;
+			if(sortedEnemies.Count > 0)
+			{
+				enemy = sortedEnemies[0];
+				sortedEnemies.RemoveAt(0);
+				
+				//attack enemy
+			}
+			else
+			{
+				//wander
+			}
+		}
+		else
+		{
+			//move to item
+			bool seekItem = false;
+			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("Item")));
 			if(sortedItems.Count > 0)
 			{
 				Collider2D item = null;
@@ -29,34 +47,16 @@ public class Enemy : CharacterBase
 					item = sortedItems[0];
 					sortedItems.RemoveAt(0);
 				} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
-
+				
 				if(item != null)
 				{
-					//pickup item
-				}
-				else
-				{
-					itemToPickup = false;
+					//move to item
+					seekItem = true;
 				}
 			}
-			if(!itemToPickup)
+			if(!seekItem)
 			{
-			}
-
-		}
-		else
-		{
-			SortedList<float,Collider2D> sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, throwRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
-			if(sortedEnemies.Count > 0)
-			{
-				Collider2D enemy = sortedEnemies[0];
-				sortedEnemies.RemoveAt(0);
-
-				//attack enemy
-			}
-			else
-			{
-				//move to enemy
+				//wander
 			}
 		}
 	}
@@ -76,5 +76,19 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
+		if(hasItem)
+		{
+			if(col.CompareTag("Player") || col.CompareTag("Enemy"))
+			{
+				//attack enemy
+			}
+		}
+		else
+		{
+			if(col.CompareTag("Item"))
+			{
+				//pick up item
+			}
+		}
 	}
 }
