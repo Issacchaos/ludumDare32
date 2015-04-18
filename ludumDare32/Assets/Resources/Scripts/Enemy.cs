@@ -130,6 +130,7 @@ public class Enemy : CharacterBase
 		GetComponent<ObjectBase>().enabled = true;
 		gameObject.layer = LayerMask.NameToLayer("CollideItem");
 		tag = "Item";
+		GetComponent<Rigidbody2D>().fixedAngle = false;;
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -164,17 +165,20 @@ public class Enemy : CharacterBase
 
 	void OnCollisionEnter2D (Collision2D c)
 	{
-		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase>().who_threw != gameObject) {
-			if(c.gameObject.GetComponent<ObjectBase>().thrown){
-				//Destroy(gameObject);
-				Killed();
+		if(c.gameObject.CompareTag("Item"))
+		{
+			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
+			if(obj.who_threw != gameObject)
+			{
+				if(obj.thrown)
+					Killed();
 			}
-		}
+			else
+			{
+				obj.GetComponent<BoxCollider2D>().isTrigger = true;
+			}
 
-		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase> ().who_threw == gameObject) {
-			c.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
 		}
-
 	}
 
 	void OnTriggerExit2D(Collider2D c){
