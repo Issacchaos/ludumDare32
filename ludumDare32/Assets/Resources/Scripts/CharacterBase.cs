@@ -32,6 +32,7 @@ public class CharacterBase : MonoBehaviour
 		gameObjects = new List<GameObject> ();
 		levelSys = new Dictionary<int,List<int>> ();
 
+		curWeight = 0;
 		for(int i=1;i<=10;i++)
 		{
 			// a list in the order of maxWeight, max exp, max health
@@ -96,7 +97,6 @@ public class CharacterBase : MonoBehaviour
 	{
 		float tmpDist = 0.0f;
 		GameObject closest = null;
-		Debug.Log (gameObjects[0]);
 		for(int i=0;i<gameObjects.Count;i++)
 		{
 			ObjectBase scr = gameObjects[i].GetComponent<ObjectBase>();
@@ -115,9 +115,12 @@ public class CharacterBase : MonoBehaviour
 			}
 		}
 
+		Debug.Log (closest);
+
 		if(closest)
 		{
 			item = closest;
+			curWeight = closest.GetComponent<ObjectBase>().weight;
 			hasItem = true;
 			item.SendMessage ("Picked_up", gameObject);
 			item.GetComponent<BoxCollider2D> ().isTrigger = true;
