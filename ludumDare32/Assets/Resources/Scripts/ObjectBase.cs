@@ -52,4 +52,6 @@ public class ObjectBase : MonoBehaviour {
 		thrown = true;
 		speed = throw_speed;
 	}	
+
+
 }

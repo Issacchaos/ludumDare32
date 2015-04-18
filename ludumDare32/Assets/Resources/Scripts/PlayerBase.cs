@@ -45,6 +45,8 @@ public class PlayerBase : CharacterBase
 				float throw_speed = max_throw_speed - ((curWeight / maxWeight) * max_throw_speed);
 				Debug.Log (throw_speed);
 				item.GetComponent<ObjectBase>().Fire(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0), throw_speed);
+				item.GetComponent<BoxCollider2D>().isTrigger = false;
+				item.GetComponent<Rigidbody2D>().isKinematic = false;
 				hasItem = false;
 			}
 			else if(gameObjects.Count > 0)

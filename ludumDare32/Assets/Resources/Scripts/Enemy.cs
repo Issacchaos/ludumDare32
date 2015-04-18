@@ -120,6 +120,7 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
+
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			ObjectBase obj = col.GetComponent<ObjectBase>();
@@ -144,6 +145,15 @@ public class Enemy : CharacterBase
 				}
 
 			}
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D c)
+	{
+		Debug.Log ("hihi");
+
+		if (c.gameObject.CompareTag ("Item")) {
+			Destroy(gameObject);
 		}
 	}
 }
