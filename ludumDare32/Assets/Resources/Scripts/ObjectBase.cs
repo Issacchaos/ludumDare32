@@ -12,6 +12,7 @@ public class ObjectBase : MonoBehaviour {
 	private GameObject pivot;
 	private Vector3 target = Vector3.zero;
 	private float speed;
+	private string id;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class ObjectBase : MonoBehaviour {
 		speed = 2.0f;
 
 		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
+
 
 		Debug.Log (size_x);
 	}

@@ -114,7 +114,9 @@ public class CharacterBase : MonoBehaviour
 				}
 			}
 		}
+
 		Debug.Log (closest);
+
 		if(closest)
 		{
 			item = closest;
