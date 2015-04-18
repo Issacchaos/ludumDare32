@@ -8,7 +8,9 @@ public class HealthPotion : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D col){
 		if(col.CompareTag("Player") || col.CompareTag("Enemy"))
 		{
+			Debug.Log ("Healing: " + col.gameObject + " for " + amount);
 			heal(col.gameObject);
+
 		}
 
 	}
@@ -19,6 +21,6 @@ public class HealthPotion : MonoBehaviour {
 		CharacterBase c = p.GetComponent<CharacterBase>();
 		c.health += amount;
 		c.health = Mathf.Clamp (c.health, 0, c.maxHealth);
-		Destroy (this);
+		Destroy (gameObject);
 	}
 }	
