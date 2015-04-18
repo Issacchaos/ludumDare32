@@ -4,12 +4,16 @@ using System.Collections.Generic;
 
 public class PlayerBase : CharacterBase 
 {
+	public Animator mAnim;
+
 	// Use this for initialization
 	void Start () 
 	{
 		maxHealth = 100;
 		health = maxHealth;
 		moveSpeed = 1.8f;
+		mAnim = GetComponent<Animator> ();
+		mAnim.SetTrigger ("idle");
 		base.Start ();
 //
 //		levelSys = new Dictionary<int,List<int>> ();
@@ -57,6 +61,35 @@ public class PlayerBase : CharacterBase
 
 		float xSpeed = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
 		float ySpeed = Input.GetAxisRaw ("Vertical") * moveSpeed * Time.deltaTime;
+		Debug.Log (xSpeed);
+		Debug.Log (ySpeed);
+//		if(xSpeed > 0 && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Right"))
+//		{
+//			mAnim.SetTrigger ("movingRight");
+//		}
+//		else if( xSpeed < 0 && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Left"))
+//		{
+//			mAnim.SetTrigger("movingLeft");
+//		}
+//		else if( ySpeed < 0 && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+//		{
+//			mAnim.SetTrigger("movingDown");
+//		}
+//		else if( ySpeed > 0 && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Up"))
+//		{
+//			mAnim.SetTrigger("movingUp");
+//		}
+//		else if(xSpeed == 0.0f && ySpeed == 0.0f && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+//		{
+//			//Debug.Log ("idled");
+//			mAnim.SetTrigger("idle");
+//		}
+		mAnim.SetFloat ("xSpeed", xSpeed);
+		mAnim.SetFloat ("ySpeed", ySpeed);
+		if (xSpeed == 0.0f && ySpeed == 0.0f && !mAnim.GetCurrentAnimatorStateInfo (0).IsName ("Idle"))
+		{
+			mAnim.SetTrigger("idle");
+		}
 		moveVec = new Vector2 (xSpeed, ySpeed);
 		transform.Translate(moveVec);
 
