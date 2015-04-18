@@ -7,9 +7,9 @@ public class Enemy : CharacterBase
 	public int weight = 0;
 	public float damage = 0f;
 	public float throwRange = 0f;
-	public float pickUpRange = 0f;
-
+	public float maxSeekRange = 0f;
 	public int baseExpWorth = 100;
+	public bool wandering = false;
 
 	void FixedUpdate()
 	{
@@ -17,10 +17,10 @@ public class Enemy : CharacterBase
 
 	void Update()
 	{
+		bool objectToSeek = false;
 		if(!hasItem)
 		{
-			bool itemToPickup = true;
-			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, pickUpRange, LayerMask.GetMask("Item")));
+			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask("Item")));
 			if(sortedItems.Count > 0)
 			{
 				Collider2D item = null;
@@ -32,17 +32,10 @@ public class Enemy : CharacterBase
 
 				if(item != null)
 				{
-					//pickup item
-				}
-				else
-				{
-					itemToPickup = false;
+					objectToSeek = true;
+					MoveToObject(item.transform);
 				}
 			}
-			if(!itemToPickup)
-			{
-			}
-
 		}
 		else
 		{
@@ -50,14 +43,24 @@ public class Enemy : CharacterBase
 			if(sortedEnemies.Count > 0)
 			{
 				Collider2D enemy = sortedEnemies[0];
-				sortedEnemies.RemoveAt(0);
 
-				//attack enemy
+				item.GetComponent<ObjectBase>().Fire((enemy.transform.position - transform.position));
 			}
 			else
 			{
-				//move to enemy
+				sortedEnemies = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, maxSeekRange, LayerMask.GetMask(new string[]{"Player", "Enemy"})));
+				if(sortedEnemies.Count > 0)
+				{
+					objectToSeek = true;
+					Collider2D enemy = sortedEnemies[0];
+
+					MoveToObject(enemy.transform);
+				}
 			}
+		}
+		if(!objectToSeek)
+		{
+			//wander
 		}
 	}
 
@@ -74,11 +77,36 @@ public class Enemy : CharacterBase
 		return objectColliders;
 	}
 
+	public void MoveToObject(Transform obj)
+	{
+		Vector3 moveVec = (obj.position - transform.position).normalized;
+		moveVec *= moveSpeed * Time.deltaTime;
+		transform.position += moveVec;
+	}
+
+	public IEnumerator Wander()
+	{
+		wandering = true;
+
+		yield return new WaitForSeconds(5f);
+		wandering = false;
+	}
+
+	public void StopWandering()
+	{
+		StopCoroutine("Wander");
+		wandering = false;
+	}
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if(col.CompareTag("Item") && !hasItem)
 		{
-			//pick up item
+			ObjectBase item = col.GetComponent<ObjectBase>();
+			if(maxWeight >= item.weight)
+			{
+				//pick up item
+			}
 		}
 	}
 }
