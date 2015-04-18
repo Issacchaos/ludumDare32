@@ -83,7 +83,7 @@ public class CharacterBase : MonoBehaviour
 		}
 		item = closest;
 		hasItem = true;
-		item.SendMessage ("Picked_up", transform);
+		item.SendMessage ("Picked_up", gameObject);
 	}
 
 }

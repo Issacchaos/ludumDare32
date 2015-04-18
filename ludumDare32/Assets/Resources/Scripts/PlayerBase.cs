@@ -17,14 +17,14 @@ public class PlayerBase : CharacterBase
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		print (hasItem);
+		print (Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
 		if(Input.GetMouseButtonDown(0))
 		{
 			if(hasItem)
 			{
-				print (item);
-				item.SendMessage("Fire",Camera.main.ScreenToWorldPoint(Input.mousePosition));
+				print (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+				item.SendMessage("Fire",new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
 				hasItem = false;
 			}
 			else if(gameObjects.Count > 0)
