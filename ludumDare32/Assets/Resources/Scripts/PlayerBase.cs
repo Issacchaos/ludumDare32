@@ -3,9 +3,6 @@ using System.Collections;
 
 public class PlayerBase : CharacterBase 
 {
-
-	private Vector3 moveVec = Vector3.zero;
-
 	// Use this for initialization
 	void Start () 
 	{
