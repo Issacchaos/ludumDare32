@@ -8,7 +8,7 @@ public class ObjectBase : MonoBehaviour {
 	public int size_y; //image
 	public bool picked_up = false;
 
-	private Transform pivot;
+	private GameObject pivot;
 	private Vector3 target = Vector3.zero;
 
 	// Use this for initialization
@@ -18,25 +18,27 @@ public class ObjectBase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (picked_up) {
-			transform.RotateAround(pivot.position, pivot.forward, Time.deltaTime * 10.0f);
+		if (picked_up && target == Vector3.zero) {
+			transform.position = new Vector3(pivot.transform.position.x + 1.0f, pivot.transform.position.y, pivot.transform.position.z);
+			//transform.RotateAround(pivot.transform.position, pivot.transform.forward, Time.deltaTime * 50.0f);
 		}
 	}
 
 	void FixedUpdate(){
 		if (target != Vector3.zero) {
-			transform.Translate(target * Time.deltaTime);
+			transform.position = transform.position + target.Normalize * Time.deltaTime;
 		}
 	}
 
-	public void Picked_up(Transform pos){
-		transform.position = new Vector3(pos.position.x + 5.0f, pos.position.y, pos.position.z);
+	public void Picked_up(GameObject pos){
+		transform.position = new Vector3(pos.transform.position.x + 1.0f, pos.transform.position.y, pos.transform.position.z);
 		pivot = pos;
 
 		picked_up = true;
 	}
 
 	public void Fire(Vector3 mouse_pos){
-		target = mouse_pos;
+		Debug.Log (mouse_pos);
+		target = mouse_pos - transform.position;
 	}	
 }
