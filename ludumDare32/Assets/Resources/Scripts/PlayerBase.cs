@@ -7,7 +7,7 @@ public class PlayerBase : CharacterBase
 	public Animator mAnim;
 
 	// Use this for initialization
-	void Start () 
+	protected override void Start () 
 	{
 		maxHealth = 100;
 		health = maxHealth;

@@ -43,7 +43,9 @@ public class Enemy : CharacterBase
 				{
 					Collider2D enemy = sortedEnemies.Values[0];
 					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
-					item.GetComponent<ObjectBase>().Fire(enemy.transform.position, throw_speed);
+					float angle = Random.Range(-10f, 10f);
+					Vector3 tVec = Quaternion.AngleAxis(angle, Vector3.forward) * (enemy.transform.position - transform.position);
+					item.GetComponent<ObjectBase>().Fire(tVec, throw_speed);
 					item.GetComponent<BoxCollider2D>().isTrigger = false;
 					item.GetComponent<Rigidbody2D>().isKinematic = false;
 					hasItem = false;
@@ -130,51 +132,57 @@ public class Enemy : CharacterBase
 		GetComponent<ObjectBase>().enabled = true;
 		gameObject.layer = LayerMask.NameToLayer("CollideItem");
 		tag = "Item";
+		GetComponent<Rigidbody2D>().fixedAngle = false;;
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		Debug.Log ("adfsdafd");
 		if(col.CompareTag("Item") && !hasItem)
 		{
 			ObjectBase obj = col.GetComponent<ObjectBase>();
-			if(maxWeight > obj.weight)
+			if(obj != null)
 			{
-				if(obj.thrown)
+				if(maxWeight > obj.weight)
 				{
-					print ("we got in here");
-					int tmp = Random.Range (1,10);
-					if(tmp == 1 || tmp == 2)
+					if(obj.thrown)
+					{
+						print ("we got in here");
+						int tmp = Random.Range (1,10);
+						if(tmp == 1 || tmp == 2)
+						{
+							obj.Picked_up(gameObject);
+							item = obj.gameObject;
+							hasItem = true;
+						}
+					}
+					else
 					{
 						obj.Picked_up(gameObject);
 						item = obj.gameObject;
 						hasItem = true;
 					}
-				}
-				else
-				{
-					obj.Picked_up(gameObject);
-					item = obj.gameObject;
-					hasItem = true;
-				}
 
+				}
 			}
 		}
 	}
 
 	void OnCollisionEnter2D (Collision2D c)
 	{
-		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase>().who_threw != gameObject) {
-			if(c.gameObject.GetComponent<ObjectBase>().thrown){
-				//Destroy(gameObject);
-				Killed();
+		if(c.gameObject.CompareTag("Item"))
+		{
+			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
+			if(obj.who_threw != gameObject)
+			{
+				if(obj.thrown)
+					Killed();
 			}
-		}
+			else
+			{
+				obj.GetComponent<BoxCollider2D>().isTrigger = true;
+			}
 
-		if (c.gameObject.CompareTag ("Item") && c.gameObject.GetComponent<ObjectBase> ().who_threw == gameObject) {
-			c.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
 		}
-
 	}
 
 	void OnTriggerExit2D(Collider2D c){
