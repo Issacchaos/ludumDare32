@@ -26,7 +26,7 @@ public class ObjectBase : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (target != Vector3.zero) {
-			transform.position = transform.position + target.Normalize * Time.deltaTime;
+			transform.position = transform.position + target.normalized * Time.deltaTime;
 		}
 	}
 
