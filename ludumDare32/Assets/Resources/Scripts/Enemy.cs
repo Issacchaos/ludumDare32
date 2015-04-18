@@ -2,13 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Enemy : MonoBehaviour
+public class Enemy : CharacterBase
 {
-	public float health = 0f;
 	public int weight = 0;
-	public int strength = 0;
 	public float damage = 0f;
-	public bool haveItem = false;
 	public float throwRange = 0f;
 	public float pickUpRange = 0f;
 
@@ -18,7 +15,7 @@ public class Enemy : MonoBehaviour
 
 	void Update()
 	{
-		if(!haveItem)
+		if(!hasItem)
 		{
 			SortedList<float,Collider2D> sortedItems = FindClosestObject(Physics2D.OverlapCircleAll(transform.position, pickUpRange, LayerMask.GetMask("Item")));
 			if(sortedItems.Count > 0)
@@ -27,7 +24,7 @@ public class Enemy : MonoBehaviour
 				do 
 				{
 					item = sortedItems.RemoveAt(0);
-				} while(strength < item.GetComponent<Item>().weight && sortedItems.Count > 0);
+				} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
 
 				if(item != null)
 				{
