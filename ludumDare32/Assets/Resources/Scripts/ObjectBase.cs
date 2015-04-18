@@ -9,7 +9,7 @@ public class ObjectBase : MonoBehaviour {
 	public bool picked_up = false;
 
 	private Transform pivot;
-	private Vector3 target;
+	private Vector3 target = null;
 
 	// Use this for initialization
 	void Start () {
