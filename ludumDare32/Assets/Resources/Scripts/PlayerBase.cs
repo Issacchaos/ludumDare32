@@ -9,30 +9,20 @@ public class PlayerBase : CharacterBase
 	// Use this for initialization
 	void Start () 
 	{
-		moveSpeed = 25;
+		maxHealth = 100;
+		health = maxHealth;
+		moveSpeed = 10;
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{
-		if (Input.GetKeyDown (KeyCode.W)) 
-		{
-			moveVec += transform.up;
-		}
-		if (Input.GetKeyDown (KeyCode.A)) 
-		{
-			moveVec += (-transform.right);
-		}
-		if (Input.GetKeyDown (KeyCode.D)) 
-		{
-			moveVec += transform.right;
-		}
-		if (Input.GetKeyDown (KeyCode.S)) 
-		{
-			moveVec += (-transform.up);
-		}
-		moveVec.Normalize();
-		transform.position += (moveVec * moveSpeed * Time.deltaTime);
-		moveVec = Vector3.zero;
+
+
+		float xSpeed = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+		float ySpeed = Input.GetAxis ("Vertical") * moveSpeed * Time.deltaTime;
+		moveVec = new Vector3 (xSpeed, ySpeed, 0.0f);
+		transform.position += moveVec;
+
 	}
 }

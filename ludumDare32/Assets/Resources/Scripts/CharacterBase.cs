@@ -25,7 +25,6 @@ public class CharacterBase : MonoBehaviour
 	void Start () 
 	{
 		gameObjects = new List<GameObject> ();
-		health = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -74,6 +73,14 @@ public class CharacterBase : MonoBehaviour
 			dead = true;
 		}
 		health -= dmg;
+	}
+
+	void addExp(int val)
+	{
+		if((exp + val) >= maxExp)
+		{
+			level += 1;
+		}
 	}
 
 }
