@@ -4,7 +4,7 @@ using System.Collections;
 public class ObjectBase : MonoBehaviour {
 
 	public int weight;
-	public int size_x; //image
+	public float size_x; //image
 	public int size_y; //image
 	public bool picked_up = false;
 	public bool thrown;
@@ -17,12 +17,16 @@ public class ObjectBase : MonoBehaviour {
 	void Start () {
 		//just in case something goes wrong
 		speed = 2.0f;
+
+		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
+
+		Debug.Log (size_x);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (picked_up && target == Vector3.zero) {
-			transform.position = new Vector3(pivot.transform.position.x + 1.0f, pivot.transform.position.y, pivot.transform.position.z);
+			transform.position = new Vector3(pivot.transform.position.x + 0.15f + size_x/2, pivot.transform.position.y, pivot.transform.position.z);
 			//transform.RotateAround(pivot.transform.position, pivot.transform.forward, Time.deltaTime * 50.0f);
 		}
 	}
@@ -30,11 +34,12 @@ public class ObjectBase : MonoBehaviour {
 	void FixedUpdate(){
 		if (target != Vector3.zero) {
 			transform.position = transform.position + target.normalized * Time.deltaTime * speed;
+			transform.Rotate(Vector3.forward, Time.deltaTime * 500.0f);
 		}
 	}
 
 	public void Picked_up(GameObject pos){
-		transform.position = new Vector3(pos.transform.position.x + 1.0f, pos.transform.position.y, pos.transform.position.z);
+		transform.position = new Vector3(pos.transform.position.x + 0.15f + size_x/2, pos.transform.position.y, pos.transform.position.z);
 		pivot = pos;
 
 		picked_up = true;
