@@ -7,9 +7,9 @@ public class ObjectBase : MonoBehaviour {
 	public int size_x; //image
 	public int size_y; //image
 	public bool picked_up = false;
-	public Transform player_pos;
 
 	private Transform pivot;
+	private Vector3 target;
 
 	// Use this for initialization
 	void Start () {
@@ -19,23 +19,14 @@ public class ObjectBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (picked_up) {
-			//Rotate around the mouse position
-			Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player_pos.position;
-			Vector3 obj = transform.position - player_pos.position;
-
-			float angle = Vector2.Angle(new Vector2(obj.x, obj.y), new Vector2(mouse.x, mouse.y));
-		
-			Debug.Log (angle);
-			Debug.Log (mouse);
-			Debug.Log(obj);
-
-			//pivot.position = target.position;
-			//pivot.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+			transform.RotateAround(pivot.position, pivot.forward, Time.deltaTime * 10.0f);
 		}
 	}
 
 	void FixedUpdate(){
-
+		if (target != null) {
+			transform.Translate(target * Time.deltaTime);
+		}
 	}
 
 	public void Picked_up(Transform pos){
@@ -44,4 +35,8 @@ public class ObjectBase : MonoBehaviour {
 
 		picked_up = true;
 	}
+
+	public void Fire(Vector3 mouse_pos){
+		target = mouse_pos;
+	}	
 }
