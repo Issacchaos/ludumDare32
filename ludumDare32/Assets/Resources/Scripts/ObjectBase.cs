@@ -10,10 +10,6 @@ public class ObjectBase : MonoBehaviour {
 	public bool thrown = false;
 	public GameObject who_threw;
 
-	public Sprite accept;
-	public Sprite decline;
-	public Sprite original; //should be the OG image
-
 	private GameObject pivot;
 	public Vector3 target = Vector3.zero;
 	private float speed;
@@ -33,7 +29,7 @@ public class ObjectBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (picked_up && target == Vector3.zero) {
-			transform.position = new Vector3(pivot.transform.position.x + 0.165f + size_x/2, pivot.transform.position.y, pivot.transform.position.z);
+			transform.position = new Vector3(pivot.transform.position.x + 0.15f + size_x/2, pivot.transform.position.y, pivot.transform.position.z);
 			//transform.RotateAround(pivot.transform.position, pivot.transform.forward, Time.deltaTime * 50.0f);
 		}
 	}
@@ -47,9 +43,9 @@ public class ObjectBase : MonoBehaviour {
 
 	public void Picked_up(GameObject pos){
 		who_threw = pos;
-		transform.position = new Vector3(pos.transform.position.x + 0.165f + size_x/2, pos.transform.position.y, pos.transform.position.z);
+		transform.position = new Vector3(pos.transform.position.x + 0.15f + size_x/2, pos.transform.position.y, pos.transform.position.z);
 		pivot = pos;
-		GetComponent<SpriteRenderer>().sprite = original;
+
 		picked_up = true;
 	}
 
@@ -59,18 +55,5 @@ public class ObjectBase : MonoBehaviour {
 		speed = throw_speed;
 	}	
 
-	public void change_sprite(string type)
-	{
-		if (type == "enter") 
-		{
-			GetComponent<SpriteRenderer>().sprite = accept;
-
-		} 
-		else if (type == "leave") 
-		{
-			GetComponent<SpriteRenderer>().sprite = original;
-		}
-
-	}
 
 }
