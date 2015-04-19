@@ -145,6 +145,7 @@ public class Enemy : CharacterBase
 		tag = "Item";
 		GetComponent<Rigidbody2D>().fixedAngle = false;
 		transform.FindChild("TriggerCollider").gameObject.SetActive(false);
+		transform.FindChild ("HealthBar 1").gameObject.SetActive (false);
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
