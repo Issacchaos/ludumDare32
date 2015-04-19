@@ -13,7 +13,7 @@ public class Enemy : CharacterBase
 	public bool active = true;
 	public Animator anim;
 
-	void Start(){
+	protected override void Start(){
 		base.Start ();
 		maxWeight = levelSys [level] [0];
 		maxExp = levelSys [level] [1];
@@ -27,13 +27,6 @@ public class Enemy : CharacterBase
 	{
 		if (dead)
 			Killed ();
-
-
-		if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle 1"))
-		{
-			anim.Play ("Idle 1");
-			Debug.Log ("idle 1");
-		}
 	}
 
 	void FixedUpdate()
@@ -100,7 +93,6 @@ public class Enemy : CharacterBase
 			{
 				StopWandering();
 			}
-			//Animator mAnim = GetComponent<Animator>();
 			anim.SetFloat ("xSpeed", moveVec.x);
 			anim.SetFloat ("ySpeed", moveVec.y);
 			transform.Translate(moveVec * Time.deltaTime);
@@ -162,11 +154,9 @@ public class Enemy : CharacterBase
 		gameObject.layer = LayerMask.NameToLayer("CollideItem");
 		tag = "Item";
 		GetComponent<Rigidbody2D>().fixedAngle = false;
-		//transform.FindChild("TriggerCollider").gameObject.SetActive(false);
-		//transform.FindChild ("HealthBar 1").gameObject.SetActive (false);
 		Destroy (GetComponent<CircleCollider2D> ());
 		Destroy (GetComponent<Enemy> ());
-		Destroy (GetComponent<Animator> ());
+		//Destroy (GetComponent<Animator> ());
 	}
 
 	void OnTriggerEnter2D(Collider2D col)

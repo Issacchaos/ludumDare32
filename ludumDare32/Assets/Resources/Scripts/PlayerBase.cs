@@ -74,8 +74,7 @@ public class PlayerBase : CharacterBase
 
 		float xSpeed = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
 		float ySpeed = Input.GetAxisRaw ("Vertical") * moveSpeed * Time.deltaTime;
-		Debug.Log (xSpeed);
-		Debug.Log (ySpeed);
+
 //		if(xSpeed > 0 && !mAnim.GetCurrentAnimatorStateInfo(0).IsName("Right"))
 //		{
 //			mAnim.SetTrigger ("movingRight");
@@ -105,7 +104,18 @@ public class PlayerBase : CharacterBase
 		}
 		moveVec = new Vector2 (xSpeed, ySpeed);
 		transform.Translate(moveVec);
+	}
 
+	void LateUpdate()
+	{
+		if (hasItem)
+		{
+			Vector3 mousePos = Input.mousePosition;
+			mousePos = Camera.main.ScreenToWorldPoint (mousePos);
+			mousePos.z = transform.position.z;
+			Vector3 newPos = (mousePos - transform.position).normalized;
+			item.transform.position = transform.position + newPos * 0.8f;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D c)

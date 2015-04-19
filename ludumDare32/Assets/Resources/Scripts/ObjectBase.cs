@@ -23,9 +23,8 @@ public class ObjectBase : MonoBehaviour {
 
 		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
 
-
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (picked_up && target == Vector3.zero) {
