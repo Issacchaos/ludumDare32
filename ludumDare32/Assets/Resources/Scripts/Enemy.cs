@@ -14,6 +14,7 @@ public class Enemy : CharacterBase
 
 	void Start()
 	{
+		base.Start ();
 		maxWeight = levelSys [level] [0];
 		maxExp = levelSys [level] [1];
 		maxHealth = levelSys [level] [2];
