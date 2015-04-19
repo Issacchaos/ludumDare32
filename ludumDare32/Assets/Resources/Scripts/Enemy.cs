@@ -11,11 +11,16 @@ public class Enemy : CharacterBase
 	public int baseExpWorth = 100;
 	public bool wandering = false;
 	public bool active = true;
+	public Animator anim;
+
+	void Start(){
+		anim = GetComponent<Animator>();
+	}
 
 	void Update()
 	{
-		Animation anim = GetComponent<Animation>();
-		if(anim.IsPlaying("Idle 1"))
+
+		if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle 1"))
 		{
 			anim.Play ("Idle 1");
 			Debug.Log ("idle 1");
@@ -53,8 +58,10 @@ public class Enemy : CharacterBase
 				{
 					Collider2D enemy = sortedEnemies.Values[0];
 					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
-					float angle = Random.Range(-10f, 10f);
-					Vector3 tVec = Quaternion.AngleAxis(angle, Vector3.forward) * (enemy.transform.position - transform.position);
+					//float angle = Random.Range(-10f, 10f);
+					//float angle = 0.0f;
+
+					Vector3 tVec = enemy.transform.position;
 					item.GetComponent<ObjectBase>().Fire(tVec, throw_speed);
 					item.GetComponent<BoxCollider2D>().isTrigger = false;
 					item.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -83,9 +90,9 @@ public class Enemy : CharacterBase
 			{
 				StopWandering();
 			}
-			Animator mAnim = GetComponent<Animator>();
-			mAnim.SetFloat ("xSpeed", moveVec.x);
-			mAnim.SetFloat ("ySpeed", moveVec.y);
+			//Animator mAnim = GetComponent<Animator>();
+			anim.SetFloat ("xSpeed", moveVec.x);
+			anim.SetFloat ("ySpeed", moveVec.y);
 			transform.Translate(moveVec * Time.deltaTime);
 		}
 
@@ -145,8 +152,11 @@ public class Enemy : CharacterBase
 		gameObject.layer = LayerMask.NameToLayer("CollideItem");
 		tag = "Item";
 		GetComponent<Rigidbody2D>().fixedAngle = false;
-		transform.FindChild("TriggerCollider").gameObject.SetActive(false);
-		transform.FindChild ("HealthBar 1").gameObject.SetActive (false);
+		//transform.FindChild("TriggerCollider").gameObject.SetActive(false);
+		//transform.FindChild ("HealthBar 1").gameObject.SetActive (false);
+		Destroy (GetComponent<CircleCollider2D> ());
+		Destroy (GetComponent<Enemy> ());
+		Destroy (GetComponent<Animator> ());
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
