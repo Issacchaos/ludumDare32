@@ -64,6 +64,7 @@ public class PlayerBase : CharacterBase
 				item.GetComponent<BoxCollider2D>().isTrigger = false;
 				item.GetComponent<Rigidbody2D>().isKinematic = false;
 				hasItem = false;
+				curWeight = 0.0f;
 			}
 			else if(gameObjects.Count > 0)
 			{
@@ -125,6 +126,26 @@ public class PlayerBase : CharacterBase
 			{
 				removeItem(c.gameObject);
 			}
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D c)
+	{
+		if(c.gameObject.CompareTag("Item"))
+		{
+			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
+			if(obj.who_threw != gameObject)
+			{
+				if(obj.thrown){
+					Debug.LogWarning (obj.GetComponent<ObjectBase>().damage);
+					takeDamage(obj.GetComponent<ObjectBase>().damage);
+				}
+			}
+			else
+			{
+				obj.GetComponent<BoxCollider2D>().isTrigger = true;
+			}
+			
 		}
 	}
 

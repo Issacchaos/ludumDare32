@@ -75,6 +75,7 @@ public class Enemy : CharacterBase
 					item.GetComponent<BoxCollider2D>().isTrigger = false;
 					item.GetComponent<Rigidbody2D>().isKinematic = false;
 					hasItem = false;
+					curWeight = 0.0f;
 				}
 				else
 				{
@@ -186,6 +187,7 @@ public class Enemy : CharacterBase
 							obj.Picked_up(gameObject);
 							item = obj.gameObject;
 							hasItem = true;
+							curWeight = obj.weight;
 						}
 					}
 					else
@@ -193,6 +195,7 @@ public class Enemy : CharacterBase
 						obj.Picked_up(gameObject);
 						item = obj.gameObject;
 						hasItem = true;
+						curWeight = obj.weight;
 					}
 
 				}
