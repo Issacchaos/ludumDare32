@@ -55,5 +55,12 @@ public class ObjectBase : MonoBehaviour {
 		speed = throw_speed;
 	}	
 
+	void OnCollisionEnter2D(Collision2D c)
+	{
+		if(c.gameObject.CompareTag("Wall"))
+		{
+			target = Vector3.zero;
+		}
+	}
 
 }
