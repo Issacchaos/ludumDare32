@@ -24,7 +24,6 @@ public class ObjectBase : MonoBehaviour {
 		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
 
 
-		Debug.Log (size_x);
 	}
 	
 	// Update is called once per frame
@@ -55,7 +54,19 @@ public class ObjectBase : MonoBehaviour {
 		thrown = true;
 		speed = throw_speed;
 		damage = dmg;
-	}	
+	}
+
+	void OnCollisionEnter2D(Collision2D c)
+	{
+		if(c.gameObject.CompareTag("Wall"))
+		{
+			Debug.Log("we got here");
+			target = Vector3.zero;
+			thrown = false;
+			who_threw = null;
+
+		}
+	}
 
 
 }
