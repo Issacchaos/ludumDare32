@@ -22,11 +22,8 @@ public class ObjectBase : MonoBehaviour {
 		speed = 2.0f;
 
 		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
-
-
-		Debug.Log (size_x);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (picked_up && target == Vector3.zero) {

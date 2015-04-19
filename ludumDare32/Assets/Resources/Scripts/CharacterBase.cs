@@ -38,9 +38,13 @@ public class CharacterBase : MonoBehaviour
 			// a list in the order of maxWeight, max exp, max health
 			List<float> tmp = new List<float>();
 			tmp.Add(1 + (5 * i));
-			tmp.Add(100 + (50 * i));
+			tmp.Add(100 + (200 * i));
 			tmp.Add(100 + (20 * i));
 			levelSys.Add (i,tmp);
+			foreach(float f in tmp)
+			{
+				Debug.LogError(f);
+			}
 		}
 
 
