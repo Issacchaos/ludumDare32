@@ -14,11 +14,20 @@ public class Enemy : CharacterBase
 	public Animator anim;
 
 	void Start(){
+		base.Start ();
+		maxWeight = levelSys [level] [0];
+		maxExp = levelSys [level] [1];
+		maxHealth = levelSys [level] [2];
+
+		health = maxHealth;
 		anim = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
+		if (dead)
+			Killed ();
+
 
 		if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle 1"))
 		{
@@ -60,9 +69,9 @@ public class Enemy : CharacterBase
 					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
 					//float angle = Random.Range(-10f, 10f);
 					//float angle = 0.0f;
-
+					float dmg = maxHealth * (curWeight/maxWeight);
 					Vector3 tVec = enemy.transform.position;
-					item.GetComponent<ObjectBase>().Fire(tVec, throw_speed);
+					item.GetComponent<ObjectBase>().Fire(tVec, throw_speed, dmg);
 					item.GetComponent<BoxCollider2D>().isTrigger = false;
 					item.GetComponent<Rigidbody2D>().isKinematic = false;
 					hasItem = false;
@@ -143,7 +152,7 @@ public class Enemy : CharacterBase
 
 	public void Killed()
 	{
-		dead = true;
+		//dead = true;
 		enabled = false;
 		if(item != null)
 			item.GetComponent<ObjectBase>().picked_up = false;
@@ -199,7 +208,7 @@ public class Enemy : CharacterBase
 			if(obj.who_threw != gameObject)
 			{
 				if(obj.thrown)
-					Killed();
+					takeDamage(obj.GetComponent<ObjectBase>().damage);
 			}
 			else
 			{

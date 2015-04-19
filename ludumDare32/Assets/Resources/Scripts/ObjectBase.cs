@@ -9,6 +9,7 @@ public class ObjectBase : MonoBehaviour {
 	public bool picked_up = false;
 	public bool thrown = false;
 	public GameObject who_threw;
+	public float damage;
 
 	private GameObject pivot;
 	public Vector3 target = Vector3.zero;
@@ -49,10 +50,11 @@ public class ObjectBase : MonoBehaviour {
 		picked_up = true;
 	}
 
-	public void Fire(Vector3 mouse_pos, float throw_speed){
+	public void Fire(Vector3 mouse_pos, float throw_speed, float dmg){
 		target = mouse_pos - transform.position;
 		thrown = true;
 		speed = throw_speed;
+		damage = dmg;
 	}	
 
 

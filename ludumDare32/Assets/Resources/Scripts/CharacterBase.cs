@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public class CharacterBase : MonoBehaviour 
 {
 
-	public int health;
-	public int maxHealth;
+	public float health;
+	public float maxHealth;
 	public float moveSpeed;
-	public int maxWeight = 1;
-	public int curWeight = 0;
+	public float maxWeight = 1f;
+	public float curWeight = 0f;
 	public int level = 1;
 	public int exp = 0;
-	public int maxExp;
+	public float maxExp;
 	public float max_throw_speed = 5.0f;
 	public int maxLevel = 10;
 
@@ -21,7 +21,7 @@ public class CharacterBase : MonoBehaviour
 
 	public GameObject item;
 	public List<GameObject> gameObjects;
-	public Dictionary<int,List<int>> levelSys;
+	public Dictionary<int,List<float>> levelSys;
 
 	protected Vector3 moveVec = Vector3.zero;
 
@@ -30,13 +30,13 @@ public class CharacterBase : MonoBehaviour
 	protected virtual void Start () 
 	{
 		gameObjects = new List<GameObject> ();
-		levelSys = new Dictionary<int,List<int>> ();
+		levelSys = new Dictionary<int,List<float>> ();
 
 		curWeight = 0;
 		for(int i=1;i<=10;i++)
 		{
 			// a list in the order of maxWeight, max exp, max health
-			List<int> tmp = new List<int>();
+			List<float> tmp = new List<float>();
 			tmp.Add(1 + (5 * i));
 			tmp.Add(100 + (50 * i));
 			tmp.Add(100 + (20 * i));
@@ -62,9 +62,11 @@ public class CharacterBase : MonoBehaviour
 		gameObjects.Remove(c);
 	}
 
-	void takeDamage(int dmg)
+	public void takeDamage(float dmg)
 	{
-		if((health - dmg) <= 0)
+		Debug.LogWarning (dmg);
+
+		if((health - dmg) <= 0.0f)
 		{
 			dead = true;
 		}
@@ -80,16 +82,13 @@ public class CharacterBase : MonoBehaviour
 				level += 1;
 				maxWeight = levelSys[level][0];
 				maxExp = levelSys[level][1];
-				int tmp = maxHealth;
+				float tmp = maxHealth;
 				maxHealth = levelSys[level][2];
 				if(health == tmp)
 	             {
 					health = maxHealth;
 	             }
 			}
-
-
-
 		}
 	}
 

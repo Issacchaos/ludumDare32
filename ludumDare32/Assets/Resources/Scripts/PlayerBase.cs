@@ -9,12 +9,16 @@ public class PlayerBase : CharacterBase
 	// Use this for initialization
 	protected override void Start () 
 	{
-		maxHealth = 100;
+		base.Start ();
+
+		maxWeight = levelSys [level] [0];
+		maxExp = levelSys[level][1];
+		maxHealth = levelSys[level][2];
 		health = maxHealth;
 		moveSpeed = 1.8f;
 		mAnim = GetComponent<Animator> ();
 		mAnim.SetTrigger ("idle");
-		base.Start ();
+
 //
 //		levelSys = new Dictionary<int,List<int>> ();
 //		
@@ -28,6 +32,12 @@ public class PlayerBase : CharacterBase
 //			levelSys.Add (i,tmp);
 //		}
 
+	}
+
+	void Update()
+	{
+		if (dead)
+			killed ();
 	}
 	
 	// Update is called once per frame
@@ -47,8 +57,10 @@ public class PlayerBase : CharacterBase
 				Debug.Log(maxWeight);
 				
 				float throw_speed = max_throw_speed - ((curWeight / maxWeight) * max_throw_speed);
-				Debug.Log (throw_speed);
-				item.GetComponent<ObjectBase>().Fire(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0), throw_speed);
+				float dmg = maxHealth * (curWeight/maxWeight);
+
+				Debug.LogWarning(curWeight/maxWeight);
+				item.GetComponent<ObjectBase>().Fire(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0), throw_speed, dmg);
 				item.GetComponent<BoxCollider2D>().isTrigger = false;
 				item.GetComponent<Rigidbody2D>().isKinematic = false;
 				hasItem = false;
@@ -114,6 +126,14 @@ public class PlayerBase : CharacterBase
 				removeItem(c.gameObject);
 			}
 		}
+	}
+
+	public void killed()
+	{
+		if(item != null)
+			item.GetComponent<ObjectBase>().picked_up = false;
+
+		Destroy (GetComponent<PlayerBase> ());
 	}
 
 }
