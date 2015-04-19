@@ -12,6 +12,16 @@ public class Enemy : CharacterBase
 	public bool wandering = false;
 	public bool active = true;
 
+	void Update()
+	{
+		Animation anim = GetComponent<Animation>();
+		if(anim.IsPlaying("Idle 1"))
+		{
+			anim.Play ("Idle 1");
+			Debug.Log ("idle 1");
+		}
+	}
+
 	void FixedUpdate()
 	{
 		if(active)
@@ -73,7 +83,9 @@ public class Enemy : CharacterBase
 			{
 				StopWandering();
 			}
-			
+			Animator mAnim = GetComponent<Animator>();
+			mAnim.SetFloat ("xSpeed", moveVec.x);
+			mAnim.SetFloat ("ySpeed", moveVec.y);
 			transform.Translate(moveVec * Time.deltaTime);
 		}
 
