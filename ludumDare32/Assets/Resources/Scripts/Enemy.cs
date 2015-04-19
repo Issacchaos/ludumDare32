@@ -12,16 +12,6 @@ public class Enemy : CharacterBase
 	public bool wandering = false;
 	public bool active = true;
 
-	void Update()
-	{
-		Animation anim = GetComponent<Animation>();
-		if(anim.IsPlaying("Idle 1"))
-		{
-			anim.Play ("Idle 1");
-			Debug.Log ("idle 1");
-		}
-	}
-
 	void FixedUpdate()
 	{
 		if(active)
@@ -144,7 +134,8 @@ public class Enemy : CharacterBase
 		GetComponent<ObjectBase>().enabled = true;
 		gameObject.layer = LayerMask.NameToLayer("CollideItem");
 		tag = "Item";
-		GetComponent<Rigidbody2D>().fixedAngle = false;;
+		GetComponent<Rigidbody2D>().fixedAngle = false;
+		transform.FindChild("TriggerCollider").gameObject.SetActive(false);
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
