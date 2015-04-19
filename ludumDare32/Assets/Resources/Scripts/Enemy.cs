@@ -12,6 +12,14 @@ public class Enemy : CharacterBase
 	public bool wandering = false;
 	public bool active = true;
 
+	void Start()
+	{
+		maxWeight = levelSys [level] [0];
+		maxExp = levelSys [level] [1];
+		maxHealth = levelSys [level] [2];
+		health = maxHealth;
+	}
+
 	void FixedUpdate()
 	{
 		if(active)
