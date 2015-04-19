@@ -9,6 +9,8 @@ public class ObjectBase : MonoBehaviour {
 	public bool picked_up = false;
 	public bool thrown = false;
 	public GameObject who_threw;
+	public bool breakable = false;
+
 
 	private GameObject pivot;
 	public Vector3 target = Vector3.zero;
@@ -57,9 +59,14 @@ public class ObjectBase : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D c)
 	{
+		Debug.Log("JustAnything0");
 		if(c.gameObject.CompareTag("Wall"))
 		{
+			Debug.Log("JustAnything1");
+			picked_up = false;
 			target = Vector3.zero;
+			who_threw = null;
+			thrown = false;
 		}
 	}
 
