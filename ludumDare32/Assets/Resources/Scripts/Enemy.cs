@@ -163,32 +163,35 @@ public class Enemy : CharacterBase
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if(col.CompareTag("Item") && !hasItem)
+		if(active)
 		{
-			ObjectBase obj = col.GetComponent<ObjectBase>();
-			if(obj != null)
+			if(col.CompareTag("Item") && !hasItem)
 			{
-				if(maxWeight > obj.weight)
+				ObjectBase obj = col.GetComponent<ObjectBase>();
+				if(obj != null)
 				{
-					if(obj.thrown)
+					if(maxWeight > obj.weight)
 					{
-						int tmp = Random.Range (1,10);
-						if(tmp == 1 || tmp == 2)
+						if(obj.thrown)
+						{
+							int tmp = Random.Range (1,10);
+							if(tmp == 1 || tmp == 2)
+							{
+								obj.Picked_up(gameObject);
+								item = obj.gameObject;
+								hasItem = true;
+								curWeight = obj.weight;
+							}
+						}
+						else
 						{
 							obj.Picked_up(gameObject);
 							item = obj.gameObject;
 							hasItem = true;
 							curWeight = obj.weight;
 						}
-					}
-					else
-					{
-						obj.Picked_up(gameObject);
-						item = obj.gameObject;
-						hasItem = true;
-						curWeight = obj.weight;
-					}
 
+					}
 				}
 			}
 		}
@@ -196,28 +199,31 @@ public class Enemy : CharacterBase
 
 	void OnCollisionEnter2D (Collision2D c)
 	{
-		if(c.gameObject.CompareTag("Item"))
+		if(active)
 		{
-			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
-			if(obj.who_threw != gameObject)
+			if(c.gameObject.CompareTag("Item"))
 			{
-				if(obj.thrown && active)
-					takeDamage(obj.GetComponent<ObjectBase>().damage);
-//				else
-//					//Mapmanager
-			}
-			else
-			{
-				obj.GetComponent<BoxCollider2D>().isTrigger = true;
-			}
+				ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
+				if(obj.who_threw != gameObject)
+				{
+					if(obj.thrown && active)
+						takeDamage(obj.GetComponent<ObjectBase>().damage);
+				}
+				else
+				{
+					obj.GetComponent<BoxCollider2D>().isTrigger = true;
+				}
 
+			}
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D c){
-		if (c.gameObject.CompareTag ("Item")) {
-			c.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+		if(active)
+		{
+			if (c.gameObject.CompareTag ("Item")) {
+				c.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+			}
 		}
-
 	}
 }
