@@ -61,7 +61,7 @@ public class Enemy : CharacterBase
 				if(sortedEnemies.Count > 0)
 				{
 					Collider2D enemy = sortedEnemies.Values[0];
-					float throw_speed = max_throw_speed - (curWeight / maxWeight * max_throw_speed);
+					float throw_speed = max_throw_speed - (curWeight / maxWeight * (max_throw_speed/2));
 					//float angle = Random.Range(-10f, 10f);
 					//float angle = 0.0f;
 					float dmg = maxHealth * (curWeight/maxWeight);
