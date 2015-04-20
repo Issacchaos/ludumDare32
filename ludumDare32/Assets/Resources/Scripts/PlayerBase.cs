@@ -6,7 +6,8 @@ public class PlayerBase : CharacterBase
 {
 
 	public GameObject hb;
-
+	public int lives = 3;
+	public Transform respawn;
 	// Use this for initialization
 	protected override void Start () 
 	{
@@ -163,15 +164,28 @@ public class PlayerBase : CharacterBase
 
 	public void killed()
 	{
-		if(item != null)
-			item.GetComponent<ObjectBase>().picked_up = false;
-
-		if(hb)
+		if(lives > 0)
 		{
-			hb.SetActive(false);
+			transform.position = respawn.position;
+			health = maxHealth;
+			curWeight = 0;
+			exp = 0;
+			lives -= 1;
+			dead = false;
+		}
+		else
+		{
+			if(item != null)
+				item.GetComponent<ObjectBase>().picked_up = false;
+			
+			if(hb)
+			{
+				hb.SetActive(false);
+			}
+			GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().gameOver = true;
+			Destroy (GetComponent<PlayerBase> ());
 		}
 
-		Destroy (GetComponent<PlayerBase> ());
 	}
 
 }

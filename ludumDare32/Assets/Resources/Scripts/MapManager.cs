@@ -45,7 +45,7 @@ public class MapManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(start && activeEnemies.Count == 0)
+		if(start && activeEnemies.Count == 0 && !gameOver)
 		{
 			int numEnemies = 0;
 			if(wave == 1)
