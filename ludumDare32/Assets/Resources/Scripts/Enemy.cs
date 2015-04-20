@@ -214,6 +214,8 @@ public class Enemy : CharacterBase
 				{
 					if(obj.thrown && active)
 					{
+						obj.GetComponent<ObjectBase>().thrown = false;
+						obj.GetComponent<ObjectBase>().who_threw = null;
 						takeDamage(obj.GetComponent<ObjectBase>().damage);
 						
 						if(dead)
@@ -221,14 +223,15 @@ public class Enemy : CharacterBase
 							Debug.Log("modified exp");
 							obj.who_threw.GetComponent<CharacterBase>().addExp((baseExpWorth * level));
 						}
-						obj.GetComponent<ObjectBase>().thrown = false;
-						obj.GetComponent<ObjectBase>().who_threw = null;
+						;
 					}
 					else if(obj.thrown && !active)
 					{
 						if(!GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start)
 						{
 							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start = true;
+							active = true;
+							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().shitStarter = gameObject;
 						}
 						obj.GetComponent<ObjectBase>().thrown = false;
 						obj.GetComponent<ObjectBase>().who_threw = null;

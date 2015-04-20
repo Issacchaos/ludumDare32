@@ -86,18 +86,18 @@ public class ObjectBase : MonoBehaviour {
 			if(glass)
 				glassHit.Play();
 		}
-		else if(c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("Player"))
-		{
-			target = Vector3.zero;
-			picked_up = false;
-			if(flying)
-			{
-				flying.Stop();
-			}
-
-			if(glass)
-				glassHit.Play();
-		}
+//		else if(c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("Player"))
+//		{
+//			target = Vector3.zero;
+//			picked_up = false;
+//			if(flying)
+//			{
+//				flying.Stop();
+//			}
+//
+//			if(glass)
+//				glassHit.Play();
+//		}
 	}
 
 	public void changeSprite(string s)

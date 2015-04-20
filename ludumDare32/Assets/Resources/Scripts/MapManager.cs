@@ -12,9 +12,14 @@ public class MapManager : MonoBehaviour
 	public GameObject[] enemies;
 	public List<GameObject> activeEnemies;
 	public List<GameObject> nonactiveEnemies;
+	public GameObject shitStarter;
 	public bool start = false;
 	public bool gameOver = false;
 	public int wave = 1;
+	public AudioSource intro;
+	public AudioSource outro;
+	public AudioSource uwatMate;
+	public bool mate = false;
 	
 	// Use this for initialization
 	void Start () 
@@ -32,6 +37,13 @@ public class MapManager : MonoBehaviour
 			nonactiveEnemies.Add (g);
 		}
 
+		AudioSource[] audio = GetComponents<AudioSource> ();
+		intro = audio [0];
+		outro = audio [1];
+		uwatMate = audio [2];
+
+
+
 //		itemTransforms = new List<Transform> ();
 //		itemLocations = GameObject.FindGameObjectsWithTag ("itemLoc");
 //		for(int i=0;i<itemLocations.Length;i++)
@@ -45,12 +57,24 @@ public class MapManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(uwatMate.isPlaying)
+		{
+
+		}	
+		else
+		{
+			if(!outro.isPlaying)
+				outro.Play ();
+		}
+
 		if(start && activeEnemies.Count == 0 && !gameOver)
 		{
+			uwatMate.Play ();
+
 			int numEnemies = 0;
 			if(wave == 1)
 			{
-				numEnemies = 12;
+				numEnemies = 11;
 //				foreach(GameObject g in nonactiveEnemies)
 //				{
 //					g.GetComponent<Enemy>().active = true;
@@ -98,6 +122,11 @@ public class MapManager : MonoBehaviour
 				scr.health = scr.maxHealth;
 				scr.maxWeight = scr.levelSys[scr.level][0];
 				scr.maxExp = scr.levelSys[scr.level][1];
+			}
+			if(shitStarter)
+			{
+				activeEnemies.Add (shitStarter);
+				shitStarter = null;
 			}
 			wave += 1;
 			if(wave > 3)
