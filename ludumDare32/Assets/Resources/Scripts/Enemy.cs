@@ -11,6 +11,7 @@ public class Enemy : CharacterBase
 	public int baseExpWorth = 100;
 	public bool wandering = false;
 	public bool active = false;
+	public GameObject hb;
 
 	protected override void Start(){
 		base.Start ();
@@ -158,6 +159,7 @@ public class Enemy : CharacterBase
 		GetComponent<Rigidbody2D>().fixedAngle = false;
 		Destroy (GetComponent<CircleCollider2D> ());
 		Destroy (GetComponent<Enemy> ());
+		Destroy (hb);
 		//Destroy (GetComponent<Animator> ());
 	}
 
