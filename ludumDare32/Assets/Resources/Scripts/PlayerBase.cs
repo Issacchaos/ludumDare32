@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerBase : CharacterBase 
 {
+
+	public GameObject hb;
+
 	// Use this for initialization
 	protected override void Start () 
 	{
@@ -54,7 +57,7 @@ public class PlayerBase : CharacterBase
 				Debug.Log(curWeight);
 				Debug.Log(maxWeight);
 				
-				float throw_speed = max_throw_speed - ((curWeight / maxWeight) * max_throw_speed);
+				float throw_speed = max_throw_speed - ((curWeight / maxWeight) * (max_throw_speed/2));
 				float dmg = maxHealth * (curWeight/maxWeight);
 
 				item.GetComponent<ObjectBase>().Fire(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0), throw_speed, dmg);
@@ -162,6 +165,11 @@ public class PlayerBase : CharacterBase
 	{
 		if(item != null)
 			item.GetComponent<ObjectBase>().picked_up = false;
+
+		if(hb)
+		{
+			hb.SetActive(false);
+		}
 
 		Destroy (GetComponent<PlayerBase> ());
 	}

@@ -12,6 +12,7 @@ public class Enemy : CharacterBase
 	public bool wandering = false;
 	public bool active = false;
 	public GameObject hb;
+	public GameObject killedBy;
 
 	protected override void Start(){
 		base.Start ();
@@ -33,6 +34,7 @@ public class Enemy : CharacterBase
 	{
 		if(active)
 		{
+			hb.SetActive(true);
 			bool objectToSeek = false;
 			if(!hasItem)
 			{
@@ -96,6 +98,10 @@ public class Enemy : CharacterBase
 			mAnim.SetFloat ("xSpeed", moveVec.x);
 			mAnim.SetFloat ("ySpeed", moveVec.y);
 			transform.Translate(moveVec * Time.deltaTime);
+		}
+		else
+		{
+			hb.SetActive(false);
 		}
 	}
 
@@ -208,12 +214,15 @@ public class Enemy : CharacterBase
 				{
 					if(obj.thrown && active)
 					{
-						Debug.Log ("Hi");
 						takeDamage(obj.GetComponent<ObjectBase>().damage);
+						if(dead)
+						{
+							Debug.Log("modified exp");
+							obj.who_threw.GetComponent<CharacterBase>().addExp((baseExpWorth * level));
+						}
 					}
 					else if(obj.thrown && !active)
 					{
-						Debug.Log ("Hi");
 						if(!GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start)
 						{
 							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start = true;

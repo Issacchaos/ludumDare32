@@ -14,7 +14,7 @@ public class CharacterBase : MonoBehaviour
 	public int exp = 0;
 	public float maxExp;
 	public float max_throw_speed = 5.0f;
-	public int maxLevel = 10;
+	public int maxLevel = 3;
 
 	public bool hasItem = false;
 	public bool dead = false;
@@ -39,11 +39,11 @@ public class CharacterBase : MonoBehaviour
 		levelSys = new Dictionary<int,List<float>> ();
 
 		curWeight = 0;
-		for(int i=1;i<=10;i++)
+		for(int i=1;i<=maxLevel;i++)
 		{
 			// a list in the order of maxWeight, max exp, max health
 			List<float> tmp = new List<float>();
-			tmp.Add(1 + (5 * i));
+			tmp.Add(1 + (3 * i));
 			tmp.Add(100 + (200 * i));
 			tmp.Add(100 + (20 * i));
 			levelSys.Add (i,tmp);
@@ -88,7 +88,7 @@ public class CharacterBase : MonoBehaviour
 		playerHit.Play();
 	}
 
-	void addExp(int val)
+	public void addExp(int val)
 	{
 		if((exp + val) >= maxExp)
 		{
@@ -100,11 +100,17 @@ public class CharacterBase : MonoBehaviour
 				float tmp = maxHealth;
 				maxHealth = levelSys[level][2];
 				if(health == tmp)
-	             {
+	            {
 					health = maxHealth;
-	             }
+	            }
+				exp = 0;
 			}
 		}
+		else
+		{
+			exp += val;
+		}
+
 	}
 
 	public void pick_up()
