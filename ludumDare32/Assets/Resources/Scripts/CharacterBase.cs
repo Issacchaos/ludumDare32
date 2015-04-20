@@ -25,6 +25,12 @@ public class CharacterBase : MonoBehaviour
 
 	protected Vector3 moveVec = Vector3.zero;
 
+	public AudioSource footSteps = null;
+	public AudioSource playerHit = null;
+	public AudioSource pickUpItem = null;
+
+	public Animator mAnim;
+
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -41,19 +47,27 @@ public class CharacterBase : MonoBehaviour
 			tmp.Add(100 + (200 * i));
 			tmp.Add(100 + (20 * i));
 			levelSys.Add (i,tmp);
-			foreach(float f in tmp)
-			{
-				Debug.LogError(f);
-			}
 		}
 
+		AudioSource[] audio = GetComponents<AudioSource>();
+		footSteps = audio[0];
+		playerHit = audio [2];
+		pickUpItem = audio[1];
 
+		Debug.Log(footSteps.clip.name);
 	}
 	
-	// Update is called once per frame
-	void Update () 
+	protected virtual void LateUpdate () 
 	{
-
+		if(!mAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Idle"))
+		{
+			if(!footSteps.isPlaying)
+				footSteps.Play();
+		}
+		else
+		{
+			footSteps.Stop();
+		}
 	}
 
 	public void addItem(GameObject c)
@@ -68,13 +82,12 @@ public class CharacterBase : MonoBehaviour
 
 	public void takeDamage(float dmg)
 	{
-		Debug.LogWarning (dmg);
-
 		if((health - dmg) <= 0.0f)
 		{
 			dead = true;
 		}
 		health -= dmg;
+		playerHit.Play();
 	}
 
 	void addExp(int val)
@@ -137,6 +150,7 @@ public class CharacterBase : MonoBehaviour
 			item.SendMessage ("Picked_up", gameObject);
 			item.GetComponent<BoxCollider2D> ().isTrigger = true;
 			item.GetComponent<Rigidbody2D> ().isKinematic = true;
+			pickUpItem.Play();
 		}
 		else if(closest)
 		{
@@ -146,6 +160,7 @@ public class CharacterBase : MonoBehaviour
 			item.SendMessage ("Picked_up", gameObject);
 			item.GetComponent<BoxCollider2D> ().isTrigger = true;
 			item.GetComponent<Rigidbody2D> ().isKinematic = true;
+			pickUpItem.Play();
 		}
 		
 

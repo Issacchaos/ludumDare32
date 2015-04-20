@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerBase : CharacterBase 
 {
-	public Animator mAnim;
-
 	// Use this for initialization
 	protected override void Start () 
 	{
@@ -59,7 +57,6 @@ public class PlayerBase : CharacterBase
 				float throw_speed = max_throw_speed - ((curWeight / maxWeight) * max_throw_speed);
 				float dmg = maxHealth * (curWeight/maxWeight);
 
-				Debug.LogWarning(curWeight/maxWeight);
 				item.GetComponent<ObjectBase>().Fire(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0), throw_speed, dmg);
 				item.GetComponent<BoxCollider2D>().isTrigger = false;
 				item.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -106,8 +103,10 @@ public class PlayerBase : CharacterBase
 		transform.Translate(moveVec);
 	}
 
-	void LateUpdate()
+	protected override void LateUpdate()
 	{
+		base.LateUpdate();
+
 		if (hasItem)
 		{
 			Vector3 mousePos = Input.mousePosition;

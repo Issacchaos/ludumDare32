@@ -10,8 +10,7 @@ public class Enemy : CharacterBase
 	public float maxSeekRange = 0f;
 	public int baseExpWorth = 100;
 	public bool wandering = false;
-	public bool active = true;
-	public Animator anim;
+	public bool active = false;
 
 	protected override void Start(){
 		base.Start ();
@@ -20,7 +19,7 @@ public class Enemy : CharacterBase
 		maxHealth = levelSys [level] [2];
 
 		health = maxHealth;
-		anim = GetComponent<Animator>();
+		mAnim = GetComponent<Animator>();
 	}
 
 	void Update()
@@ -93,11 +92,10 @@ public class Enemy : CharacterBase
 			{
 				StopWandering();
 			}
-			anim.SetFloat ("xSpeed", moveVec.x);
-			anim.SetFloat ("ySpeed", moveVec.y);
+			mAnim.SetFloat ("xSpeed", moveVec.x);
+			mAnim.SetFloat ("ySpeed", moveVec.y);
 			transform.Translate(moveVec * Time.deltaTime);
 		}
-
 	}
 
 	public SortedList<float,Collider2D> FindClosestObject(Collider2D[] colliders)
@@ -200,8 +198,10 @@ public class Enemy : CharacterBase
 			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
 			if(obj.who_threw != gameObject)
 			{
-				if(obj.thrown)
+				if(obj.thrown && active)
 					takeDamage(obj.GetComponent<ObjectBase>().damage);
+//				else
+//					//Mapmanager
 			}
 			else
 			{

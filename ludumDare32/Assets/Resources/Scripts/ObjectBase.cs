@@ -63,7 +63,7 @@ public class ObjectBase : MonoBehaviour {
 			target = Vector3.zero;
 			thrown = false;
 			who_threw = null;
-
+			picked_up = false;
 		}
 	}
 
