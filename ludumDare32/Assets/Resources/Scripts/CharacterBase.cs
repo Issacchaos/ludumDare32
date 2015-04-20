@@ -53,8 +53,6 @@ public class CharacterBase : MonoBehaviour
 		footSteps = audio[0];
 		playerHit = audio [2];
 		pickUpItem = audio[1];
-
-		Debug.Log(footSteps.clip.name);
 	}
 	
 	protected virtual void LateUpdate () 

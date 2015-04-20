@@ -16,12 +16,22 @@ public class ObjectBase : MonoBehaviour {
 	private float speed;
 	private string id;
 
+	public AudioSource flying = null;
+	public AudioSource glassHit = null;
+
+	public bool glass = false;
+
 	// Use this for initialization
 	void Start () {
 		//just in case something goes wrong
 		speed = 2.0f;
 
 		size_x = GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
+
+		AudioSource[] audio = GetComponents<AudioSource>();
+		flying = audio[0];
+		if(audio.Length > 1)
+			glassHit = audio[1];
 
 	}
 
@@ -53,6 +63,7 @@ public class ObjectBase : MonoBehaviour {
 		thrown = true;
 		speed = throw_speed;
 		damage = dmg;
+		flying.Play();
 	}
 
 	void OnCollisionEnter2D(Collision2D c)
@@ -64,6 +75,9 @@ public class ObjectBase : MonoBehaviour {
 			thrown = false;
 			who_threw = null;
 			picked_up = false;
+			flying.Stop();
+			if(glass)
+				glassHit.Play();
 		}
 	}
 
