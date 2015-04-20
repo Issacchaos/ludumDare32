@@ -13,6 +13,7 @@ public class Enemy : CharacterBase
 	public bool active = false;
 	public GameObject hb;
 	public GameObject killedBy;
+	public GameObject uWot;
 
 	protected override void Start(){
 		base.Start ();
@@ -232,6 +233,9 @@ public class Enemy : CharacterBase
 							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start = true;
 							active = true;
 							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().shitStarter = gameObject;
+							
+							GameObject wat = Instantiate(uWot, transform.position + new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity) as GameObject;
+							Destroy(wat, GameObject.Find("MapManager").GetComponent<MapManager>().uwatMate.clip.length);
 						}
 						obj.GetComponent<ObjectBase>().thrown = false;
 						obj.GetComponent<ObjectBase>().who_threw = null;
