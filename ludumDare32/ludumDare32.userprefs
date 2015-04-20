@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HealthBar.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\PlayerBase.cs">
     <Files>
-      <File FileName="Assets\HealthBar.cs" Line="25" Column="2" />
+      <File FileName="Assets\Resources\Scripts\PlayerBase.cs" Line="42" Column="74" />
+      <File FileName="Assets\Resources\Scripts\CharacterBase.cs" Line="11" Column="19" />
+      <File FileName="Assets\Resources\Scripts\MapManager.cs" Line="22" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
