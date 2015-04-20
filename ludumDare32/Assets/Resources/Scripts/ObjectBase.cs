@@ -21,6 +21,10 @@ public class ObjectBase : MonoBehaviour {
 
 	public bool glass = false;
 
+	public Sprite accept;
+	public Sprite decline;
+	public Sprite normal;
+
 	// Use this for initialization
 	void Start () {
 		//just in case something goes wrong
@@ -81,5 +85,22 @@ public class ObjectBase : MonoBehaviour {
 		}
 	}
 
+	public void changeSprite(string s)
+	{
+		if (s == "enterG")
+		{
+			GetComponent<SpriteRenderer>().sprite = accept;
+		}
+
+		if (s == "enterB")
+		{
+			GetComponent<SpriteRenderer>().sprite = decline;
+		}
+
+		if (s == "leave")
+		{
+			GetComponent<SpriteRenderer>().sprite = normal;
+		}
+	}
 
 }

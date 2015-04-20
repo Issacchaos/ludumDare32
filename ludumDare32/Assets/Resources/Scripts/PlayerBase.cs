@@ -129,6 +129,13 @@ public class PlayerBase : CharacterBase
 			{
 				addItem(c.gameObject);
 			}
+
+			if(maxWeight <= c.GetComponent<ObjectBase>().weight){
+				c.SendMessage("changeSprite", "enterB");
+			}
+			if(maxWeight > c.GetComponent<ObjectBase>().weight){
+				c.SendMessage("changeSprite", "enterG");
+			}
 		}
 	}
 
@@ -139,6 +146,7 @@ public class PlayerBase : CharacterBase
 			{
 				removeItem(c.gameObject);
 			}
+			c.SendMessage("changeSprite", "leave");
 		}
 	}
 
