@@ -157,9 +157,11 @@ public class PlayerBase : CharacterBase
 			ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
 			if(obj.who_threw != gameObject)
 			{
-				if(obj.thrown){
-					Debug.LogWarning (obj.GetComponent<ObjectBase>().damage);
+				if(obj.thrown)
+				{
 					takeDamage(obj.GetComponent<ObjectBase>().damage);
+					obj.GetComponent<ObjectBase>().thrown = false;
+					obj.GetComponent<ObjectBase>().who_threw = null;
 				}
 			}
 			else

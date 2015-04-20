@@ -72,14 +72,29 @@ public class ObjectBase : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D c)
 	{
-		if(c.gameObject.CompareTag("Wall") || c.gameObject.CompareTag("Enemy"))
+		if(c.gameObject.CompareTag("Wall"))
 		{
-			Debug.Log("we got here");
 			target = Vector3.zero;
 			thrown = false;
 			who_threw = null;
 			picked_up = false;
-			flying.Stop();
+			if(flying)
+			{
+				flying.Stop();
+			}
+
+			if(glass)
+				glassHit.Play();
+		}
+		else if(c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("Player"))
+		{
+			target = Vector3.zero;
+			picked_up = false;
+			if(flying)
+			{
+				flying.Stop();
+			}
+
 			if(glass)
 				glassHit.Play();
 		}

@@ -215,11 +215,14 @@ public class Enemy : CharacterBase
 					if(obj.thrown && active)
 					{
 						takeDamage(obj.GetComponent<ObjectBase>().damage);
+						
 						if(dead)
 						{
 							Debug.Log("modified exp");
 							obj.who_threw.GetComponent<CharacterBase>().addExp((baseExpWorth * level));
 						}
+						obj.GetComponent<ObjectBase>().thrown = false;
+						obj.GetComponent<ObjectBase>().who_threw = null;
 					}
 					else if(obj.thrown && !active)
 					{
@@ -227,7 +230,8 @@ public class Enemy : CharacterBase
 						{
 							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start = true;
 						}
-
+						obj.GetComponent<ObjectBase>().thrown = false;
+						obj.GetComponent<ObjectBase>().who_threw = null;
 					}
 				}
 				else
