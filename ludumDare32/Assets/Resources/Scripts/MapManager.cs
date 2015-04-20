@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour
 		{
 			itemIds.Add (i);
 		}
-
+		enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		activeEnemies = new List<GameObject> ();
 		nonactiveEnemies = new List<GameObject> ();
 		foreach(GameObject g in enemies)
@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
 //		{
 //			itemTransforms.Add (itemLocations[i].transform);
 //		}
-		enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
 
 	}
 	

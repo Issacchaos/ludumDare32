@@ -199,23 +199,34 @@ public class Enemy : CharacterBase
 
 	void OnCollisionEnter2D (Collision2D c)
 	{
-		if(active)
-		{
 			if(c.gameObject.CompareTag("Item"))
 			{
 				ObjectBase obj = c.gameObject.GetComponent<ObjectBase>();
 				if(obj.who_threw != gameObject)
 				{
 					if(obj.thrown && active)
+					{
+						Debug.Log ("Hi");
 						takeDamage(obj.GetComponent<ObjectBase>().damage);
+					}
+					else if(obj.thrown && !active)
+					{
+						Debug.Log ("Hi");
+						if(!GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start)
+						{
+							GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>().start = true;
+						}
+
+					}
 				}
 				else
 				{
+
 					obj.GetComponent<BoxCollider2D>().isTrigger = true;
 				}
 
 			}
-		}
+		
 	}
 
 	void OnTriggerExit2D(Collider2D c){
