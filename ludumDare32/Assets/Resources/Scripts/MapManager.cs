@@ -92,7 +92,12 @@ public class MapManager : MonoBehaviour
 					nonactiveEnemies[tmp].GetComponent<Enemy>().active = true;
 					activeEnemies.Add (nonactiveEnemies[tmp]);
 				}
-
+				Enemy scr = nonactiveEnemies[tmp].GetComponent<Enemy>();
+				scr.level = wave;
+				scr.maxHealth = scr.levelSys[scr.level][2];
+				scr.health = scr.maxHealth;
+				scr.maxWeight = scr.levelSys[scr.level][0];
+				scr.maxExp = scr.levelSys[scr.level][1];
 			}
 			wave += 1;
 			if(wave > 3)

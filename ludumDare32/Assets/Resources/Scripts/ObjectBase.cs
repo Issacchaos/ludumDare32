@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ObjectBase : MonoBehaviour {
@@ -72,7 +72,7 @@ public class ObjectBase : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D c)
 	{
-		if(c.gameObject.CompareTag("Wall") && c.gameObject.CompareTag("Enemy"))
+		if(c.gameObject.CompareTag("Wall") || c.gameObject.CompareTag("Enemy"))
 		{
 			Debug.Log("we got here");
 			target = Vector3.zero;
