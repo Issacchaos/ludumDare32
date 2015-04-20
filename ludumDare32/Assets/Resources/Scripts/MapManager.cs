@@ -11,9 +11,10 @@ public class MapManager : MonoBehaviour
 	public GameObject[] itemLocations;
 	public GameObject[] enemies;
 	public List<GameObject> activeEnemies;
+	public List<GameObject> nonactiveEnemies;
 	public bool start = false;
 	public bool gameOver = false;
-	public int wave = 3;
+	public int wave = 1;
 	
 	// Use this for initialization
 	void Start () 
@@ -25,6 +26,11 @@ public class MapManager : MonoBehaviour
 		}
 
 		activeEnemies = new List<GameObject> ();
+		nonactiveEnemies = new List<GameObject> ();
+		foreach(GameObject g in enemies)
+		{
+			nonactiveEnemies.Add (g);
+		}
 
 //		itemTransforms = new List<Transform> ();
 //		itemLocations = GameObject.FindGameObjectsWithTag ("itemLoc");
@@ -41,14 +47,55 @@ public class MapManager : MonoBehaviour
 	{
 		if(start && activeEnemies.Count == 0)
 		{
-			for(int i=0;i< enemies.Length/(2^wave);i++)
+			int numEnemies = 0;
+			if(wave == 1)
 			{
-				int tmp = UnityEngine.Random.Range(0,enemies.Length);
-				enemies[tmp].GetComponent<Enemy>().active = true;
-				activeEnemies.Add (enemies[tmp]);
+				numEnemies = 12;
+//				foreach(GameObject g in nonactiveEnemies)
+//				{
+//					g.GetComponent<Enemy>().active = true;
+//				}
 			}
-			wave -= 1;
-			if(wave < 0)
+			if(wave == 2)
+			{
+				numEnemies = 10;
+				//				foreach(GameObject g in nonactiveEnemies)
+				//				{
+				//					g.GetComponent<Enemy>().active = true;
+				//				}
+			}
+			if(wave == 3)
+			{
+				numEnemies = 6;
+				//				foreach(GameObject g in nonactiveEnemies)
+				//				{
+				//					g.GetComponent<Enemy>().active = true;
+				//				}
+			}
+			for(int i=0;i< numEnemies;i++)
+			{
+				int tmp = UnityEngine.Random.Range(0,nonactiveEnemies.Count);
+				if(nonactiveEnemies[tmp].GetComponent<Enemy>().active)
+				{
+					foreach(GameObject g in nonactiveEnemies)
+					{
+						if( g.GetComponent<Enemy>().active == false)
+						{
+							g.GetComponent<Enemy>().active = true;
+							activeEnemies.Add (g);
+							break;
+						}
+					}
+				}
+				else
+				{
+					nonactiveEnemies[tmp].GetComponent<Enemy>().active = true;
+					activeEnemies.Add (nonactiveEnemies[tmp]);
+				}
+
+			}
+			wave += 1;
+			if(wave > 3)
 			{
 				gameOver = true;
 			}

@@ -143,6 +143,10 @@ public class Enemy : CharacterBase
 
 	public void Killed()
 	{
+
+		GameObject.FindGameObjectWithTag ("MapManager").GetComponent<MapManager> ().activeEnemies.Remove (gameObject);
+		GameObject.FindGameObjectWithTag ("MapManager").GetComponent<MapManager> ().nonactiveEnemies.Remove (gameObject);
+
 		//dead = true;
 		enabled = false;
 		if(item != null)
@@ -168,7 +172,6 @@ public class Enemy : CharacterBase
 				{
 					if(obj.thrown)
 					{
-						print ("we got in here");
 						int tmp = Random.Range (1,10);
 						if(tmp == 1 || tmp == 2)
 						{
