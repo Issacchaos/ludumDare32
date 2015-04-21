@@ -57,18 +57,11 @@ public class MapManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(uwatMate.isPlaying)
-		{
 
-		}	
-		else
-		{
-			if(!outro.isPlaying)
-				outro.Play ();
-		}
 
 		if(start && activeEnemies.Count == 0 && !gameOver)
 		{
+			intro.Stop ();
 			uwatMate.Play ();
 
 			int numEnemies = 0;
@@ -133,6 +126,16 @@ public class MapManager : MonoBehaviour
 			{
 				gameOver = true;
 			}
+		}
+		if(uwatMate.isPlaying == true && start == true)
+		{
+			
+		}	
+		else if(uwatMate.isPlaying == false && start == true)
+		{
+
+			if(!outro.isPlaying)
+				outro.Play ();
 		}
 	
 	}

@@ -83,7 +83,7 @@ public class ObjectBase : MonoBehaviour {
 				flying.Stop();
 			}
 
-			if(glass)
+			if(glass && glassHit)
 				glassHit.Play();
 		}
 //		else if(c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("Player"))
