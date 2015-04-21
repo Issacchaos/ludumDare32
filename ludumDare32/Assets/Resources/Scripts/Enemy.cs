@@ -46,7 +46,8 @@ public class Enemy : CharacterBase
 					do 
 					{
 						item = sortedItems.Values[0];
-						sortedItems.RemoveAt(0);
+						if(item != null)
+							sortedItems.RemoveAt(0);
 					} while(maxWeight < item.GetComponent<ObjectBase>().weight && sortedItems.Count > 0);
 					
 					if(item != null && item.GetComponent<ObjectBase>().thrown != true)
@@ -215,16 +216,18 @@ public class Enemy : CharacterBase
 				{
 					if(obj.thrown && active)
 					{
-						obj.GetComponent<ObjectBase>().thrown = false;
-						obj.GetComponent<ObjectBase>().who_threw = null;
+						//obj.GetComponent<ObjectBase>().thrown = false;
+						//obj.GetComponent<ObjectBase>().who_threw = null;
 						takeDamage(obj.GetComponent<ObjectBase>().damage);
 						
 						if(dead)
 						{
-							Debug.Log("modified exp");
-							obj.who_threw.GetComponent<CharacterBase>().addExp((baseExpWorth * level));
+							if(obj.who_threw != null){
+								Debug.Log("modified exp");
+								obj.who_threw.GetComponent<CharacterBase>().addExp((baseExpWorth * level));
+							}
 						}
-						;
+						
 					}
 					else if(obj.thrown && !active)
 					{
