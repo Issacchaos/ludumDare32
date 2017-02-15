@@ -45,3 +45,7 @@ Temporary Items
 .apdisk
 ludumDare32/Assets/Resources/Prefabs/Player.prefab
 ludumDare32/Assets/Resources/Prefabs/Player.prefab
+Library
+*.userprefs
+*.sln
+*.csproj
